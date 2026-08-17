@@ -28,7 +28,7 @@ Rebuild nötig.
 
 ```
 ru-services/
-├── index.html          Startseite (Hero, KI-Services, Programme)
+├── index.html          Startseite (Hero, Software-Lösungen, Programme)
 ├── about.html           Über den Entwickler
 ├── styles.css            Gesamtes Design
 ├── script.js              Baut die Seiteninhalte aus den data/-Dateien

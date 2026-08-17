@@ -7,9 +7,9 @@
    ============================================================ */
 
 const ABOUT = {
-  name: "Finn Ru",
-  rolle: "Entwickler · Maschinenbau-Student",
-  standort: "Deutschland",
+  name: "Finn Rummel",
+  rolle: "Softwareentwickler · Maschinenbau-Student (M.Sc.)",
+  standort: "Braunschweig, Deutschland",
 
   // Eigenes Foto einfügen:
   // 1. Bilddatei in den Ordner "img/" DIESES Projekts legen
@@ -21,29 +21,34 @@ const ABOUT = {
   foto: "img/Bild.jpg",
 
   bio: [
-    "Ich studiere Maschinenbau im Bachelor und beschäftige mich neben dem " +
-      "Studium mit Softwareentwicklung — vor allem mit praktischen Tools, " +
-      "die echte Probleme lösen, statt nur Demos zu sein.",
-    "Technik interessiert mich in die Tiefe: von Werkstoffkunde und " +
-      "numerischer Mathematik im Studium bis zu eigenen Programmen, die " +
-      "ich von der ersten Idee bis zur fertigen Anwendung baue.",
-    "Ru-Services ist der Rahmen für diese Projekte — ein Ort, an dem " +
-      "Ingenieurs-Denken und Softwareentwicklung zusammenkommen.",
+    "Ich habe meinen Bachelor in Maschinenbau an der Hochschule Minden " +
+      "abgeschlossen, mit einem großen Anteil an Informatik im Studium. " +
+      "Aktuell studiere ich im Master Maschinenbau an der TU Braunschweig.",
+    "Mein Studium habe ich dual absolviert und dadurch bereits während des " +
+      "Studiums praktische Berufserfahrung in einem großen Unternehmen " +
+      "gesammelt.",
+    "Neben dem technischen Studium interessiere ich mich besonders für " +
+      "Mathematik und Informatik sowie für wirtschaftliche Zusammenhänge. " +
+      "Einen Ausgleich dazu finde ich im Sport, vor allem beim Laufen.",
+    "Ru-Services ist der Rahmen für meine Softwareprojekte — ein Ort, an " +
+      "dem Ingenieurs-Denken und Softwareentwicklung zusammenkommen.",
   ],
 
   ausbildung: [
-    { titel: "B.Sc. Maschinenbau", info: "laufend" },
+    { titel: "B.Sc. Maschinenbau, Hochschule Minden", info: "abgeschlossen" },
+    { titel: "M.Sc. Maschinenbau, TU Braunschweig", info: "laufend" },
   ],
 
   interessen: [
-    "Werkstofftechnik & Materialwissenschaft",
-    "Numerische Methoden",
-    "KI & Automatisierung",
-    "Softwareentwicklung",
+    "Mathematik",
+    "Informatik",
+    "Sport, insbesondere Laufen",
+    "Wirtschaft",
   ],
 
   kontakt: {
-    email: "",
+    email: "finn.rummel@gmail.com",
+    telefon: "+49 1516 3472487",
     github: "https://github.com/FinnRu007",
   },
 };

@@ -23,7 +23,7 @@ const PROJECTS = [
       "Positionsdaten lokal und läuft als eigenständige Windows-Anwendung ohne " +
       "zusätzliche Installation.",
     stack: ["Python", "CustomTkinter", "ReportLab", "PyInstaller"],
-    link: "https://github.com/FinnRu007/Ru-rechnungen",
+    link: "",
   },
   {
     name: "Rechnungsersteller V2",
@@ -44,6 +44,15 @@ const PROJECTS = [
       "und effizienter Problemlösung.",
     stack: ["Python", "Backtracking"],
     link: "",
+  },
+  {
+    name: "Pomodoro Timer",
+    status: "In Bearbeitung",
+    beschreibung:
+      "Einfache Timer-Anwendung nach der Pomodoro-Technik zur fokussierten " +
+      "Zeiteinteilung zwischen Arbeits- und Pausenphasen.",
+    stack: ["Python"],
+    link: "", // Sobald ein Repository existiert, hier den Link eintragen
   },
 
   // Neues Programm hinzufügen? Einfach diesen Block kopieren

@@ -367,6 +367,7 @@ h2.section-title{
 }
 .status-Aktiv{ color: var(--success); background: var(--success-tint); }
 .status-In-Entwicklung{ color: var(--amber); background: var(--amber-tint); }
+.status-In-Bearbeitung{ color: var(--amber); background: var(--amber-tint); }
 .status-Archiviert{ color: var(--ink-soft); background: var(--bg-soft-2); }
 
 .project-link{
@@ -377,6 +378,10 @@ h2.section-title{
   width: fit-content;
 }
 .project-link:hover{ text-decoration: underline; }
+.project-link-locked{
+  color: var(--ink-soft);
+  cursor: default;
+}
 
 .project-body p{
   margin: 0 0 16px;

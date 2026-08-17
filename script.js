@@ -37,7 +37,7 @@
             .join("");
           const link = p.link
             ? `<a class="project-link" href="${escapeAttr(p.link)}" target="_blank" rel="noopener">Repository ansehen →</a>`
-            : "";
+            : `<span class="project-link project-link-locked">Nicht frei zugänglich</span>`;
           return `
             <article class="project-card">
               <div class="project-head">
@@ -93,6 +93,9 @@
           : "",
         kontakt.github
           ? `<div class="id-field"><b>GitHub</b><a href="${escapeAttr(kontakt.github)}" target="_blank" rel="noopener">${escapeHTML(kontakt.github.replace(/^https?:\/\//, ""))}</a></div>`
+          : "",
+        kontakt.telefon
+          ? `<div class="id-field"><b>Telefon</b><a href="tel:${escapeAttr(kontakt.telefon.replace(/\s+/g, ""))}">${escapeHTML(kontakt.telefon)}</a></div>`
           : "",
         a.standort ? `<div class="id-field"><b>Standort</b>${escapeHTML(a.standort)}</div>` : "",
       ].join("");
