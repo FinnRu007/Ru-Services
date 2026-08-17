@@ -47,7 +47,7 @@ const PROJECTS = [
   },
   {
     name: "Ru-Services Pomodoro Timer",
-    status: "In Bearbeitung",
+    status: "Aktiv",
     beschreibung:
       "Moderner Pomodoro-Timer mit dunklem Design: Fokuszeit, Pausenzeit " +
       "und ein individuelles Lernzeitziel lassen sich frei einstellen, " +
