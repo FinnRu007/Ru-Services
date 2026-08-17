@@ -46,13 +46,14 @@ const PROJECTS = [
     link: "",
   },
   {
-    name: "Pomodoro Timer",
+    name: "Ru-Services Pomodoro Timer",
     status: "In Bearbeitung",
     beschreibung:
-      "Einfache Timer-Anwendung nach der Pomodoro-Technik zur fokussierten " +
-      "Zeiteinteilung zwischen Arbeits- und Pausenphasen.",
+      "Moderner Pomodoro-Timer mit dunklem Design: Fokuszeit, Pausenzeit " +
+      "und ein individuelles Lernzeitziel lassen sich frei einstellen, " +
+      "der Fortschritt wird live als Kreis- und Balkenanzeige dargestellt.",
     stack: ["Python"],
-    link: "", // Sobald ein Repository existiert, hier den Link eintragen
+    link: "https://github.com/FinnRu007/Ru-Pomodoro",
   },
 
   // Neues Programm hinzufügen? Einfach diesen Block kopieren
