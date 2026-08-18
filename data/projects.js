@@ -37,7 +37,7 @@ const PROJECTS = [
   },
 {
   name: "Sudoku-Löser",
-  status: "Fertig",
+  status: "Aktiv",
   beschreibung:
     "Löst beliebige Sudokus per Knopfdruck und kann zusätzlich neue, " +
     "eindeutig lösbare Sudokus in vier Schwierigkeitsstufen generieren — " +
