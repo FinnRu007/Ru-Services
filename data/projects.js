@@ -35,16 +35,17 @@ const PROJECTS = [
     stack: ["Python", "Tkinter", "Jinja2", "LaTeX"],
     link: "",
   },
-  {
-    name: "Sudoku-Würfel-Solver",
-    status: "In Entwicklung",
-    beschreibung:
-      "Löst Sudoku-Varianten mit Backtracking-Suche und einer klaren, " +
-      "nachvollziehbaren Logik — entstanden aus Interesse an Algorithmen " +
-      "und effizienter Problemlösung.",
-    stack: ["Python", "Backtracking"],
-    link: "",
-  },
+{
+  name: "Sudoku-Löser",
+  status: "Fertig",
+  beschreibung:
+    "Löst beliebige Sudokus per Knopfdruck und kann zusätzlich neue, " +
+    "eindeutig lösbare Sudokus in vier Schwierigkeitsstufen generieren — " +
+    "läuft komplett im Browser, mit Backtracking-Suche und Live-Erkennung " +
+    "von Widersprüchen.",
+  stack: ["HTML", "CSS", "JavaScript", "Backtracking"],
+  link: "https://github.com/FinnRu007/Sudoku-Solver",
+},
   {
     name: "Ru-Services Pomodoro Timer",
     status: "Aktiv",
