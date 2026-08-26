@@ -68,8 +68,8 @@ const PROJECTS = [
       "die Zeit und stellt beides übersichtlich in Tages- und Verlaufs-" +
       "Ansichten dar — läuft komplett offline im Browser, ohne Installation.",
     stack: ["HTML", "CSS", "JavaScript"],
-    link: "https://drive.google.com/file/d/10MJo5rbMsnzXOlfSber2KUUd-1RL6rCy/view?usp=drive_link",
-    download: "downloads/naehrwert-log.html",
+    link: "",
+    download: "https://drive.google.com/file/d/10MJo5rbMsnzXOlfSber2KUUd-1RL6rCy/view?usp=drive_link",
   },
 
   // Neues Programm hinzufügen? Einfach diesen Block kopieren
