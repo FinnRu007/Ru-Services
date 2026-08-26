@@ -10,6 +10,11 @@ Du musst **kein HTML anfassen**, um Texte zu ändern:
   Jeder Eintrag ist ein Programm mit Name, Status, Beschreibung, Technologien und Link.
   Neuen Eintrag hinzufügen: Block kopieren, einfügen, Werte anpassen.
 
+- **Programm zum Download anbieten**:
+  1. Datei (z. B. eine eigenständige `.html`-App) in den Ordner `downloads/` legen.
+  2. In `data/projects.js` beim Eintrag `download: "downloads/dateiname.html"` setzen.
+  3. Es erscheint automatisch ein "Programm herunterladen →"-Button bei diesem Eintrag.
+
 - **Über den Entwickler** → `data/about.js`
   Name, Rolle, Bio-Absätze, Ausbildung, Interessen, Kontakt.
 
@@ -35,6 +40,7 @@ ru-services/
 ├── data/
 │   ├── projects.js      ← hier Programme eintragen
 │   └── about.js           ← hier Infos über dich eintragen
+├── downloads/            ← herunterladbare Programme (Dateien)
 └── README.md
 ```
 

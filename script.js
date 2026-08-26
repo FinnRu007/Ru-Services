@@ -35,8 +35,19 @@
           const stack = (p.stack || [])
             .map((s) => `<li>${escapeHTML(s)}</li>`)
             .join("");
-          const link = p.link
-            ? `<a class="project-link" href="${escapeAttr(p.link)}" target="_blank" rel="noopener">Repository ansehen →</a>`
+          const linkParts = [];
+          if (p.link) {
+            linkParts.push(
+              `<a class="project-link" href="${escapeAttr(p.link)}" target="_blank" rel="noopener">Repository ansehen →</a>`
+            );
+          }
+          if (p.download) {
+            linkParts.push(
+              `<a class="project-link" href="${escapeAttr(p.download)}" download>Programm herunterladen →</a>`
+            );
+          }
+          const link = linkParts.length
+            ? linkParts.join("")
             : `<span class="project-link project-link-locked">Nicht frei zugänglich</span>`;
           return `
             <article class="project-card">

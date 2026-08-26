@@ -11,6 +11,9 @@
    - beschreibung : Freitext, beliebig lang
    - stack        : Liste der verwendeten Technologien
    - link         : Link zu GitHub o.ä. (optional, sonst "")
+   - download     : Pfad zu einer Datei im Repo, die direkt herunter-
+                    geladen werden kann, z.B. "downloads/mein-programm.html"
+                    (optional, sonst weglassen oder "")
    ============================================================ */
 
 const PROJECTS = [
@@ -56,6 +59,18 @@ const PROJECTS = [
     stack: ["Python"],
     link: "https://github.com/FinnRu007/Ru-Pomodoro",
   },
+  {
+    name: "Ernährungsplaner (Nährwert-Log)",
+    status: "Aktiv",
+    beschreibung:
+      "Persönlicher Ernährungs-Tracker als eigenständige Web-App: erfasst " +
+      "Mahlzeiten und Kalorien pro Tag, verfolgt das Körpergewicht über " +
+      "die Zeit und stellt beides übersichtlich in Tages- und Verlaufs-" +
+      "Ansichten dar — läuft komplett offline im Browser, ohne Installation.",
+    stack: ["HTML", "CSS", "JavaScript"],
+    link: "",
+    download: "downloads/naehrwert-log.html",
+  },
 
   // Neues Programm hinzufügen? Einfach diesen Block kopieren
   // und mit deinen Daten füllen:
@@ -66,5 +81,6 @@ const PROJECTS = [
   //   beschreibung: "Beschreibung hier einfügen.",
   //   stack: ["Technologie 1", "Technologie 2"],
   //   link: "https://…",
+  //   download: "downloads/dateiname.html",
   // },
 ];

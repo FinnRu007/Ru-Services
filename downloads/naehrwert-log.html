@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nährwert-Log</title>
+<style>
+  :root{
+    --bg:#F6F6F8;
+    --surface:#FFFFFF;
+    --border:#EAEAEE;
+    --ink:#14151A;
+    --ink-soft:#6C6E79;
+    --ink-faint:#A6A8B3;
+    --accent:#4F46E5;
+    --accent-soft:#EEECFD;
+    --accent-dark:#3B32C4;
+    --green:#0EA972;
+    --green-soft:#E3F7EE;
+    --amber:#B7791F;
+    --amber-soft:#FBF0DD;
+    --warn:#DC4C3F;
+    --shadow-sm:0 1px 2px rgba(20,21,26,0.05);
+    --shadow-md:0 10px 30px rgba(20,21,26,0.06);
+    --r-sm:10px;
+    --r-md:14px;
+    --r-lg:20px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    font-feature-settings:'tnum' 1;
+    color:var(--ink);
+    background:var(--bg);
+    min-height:100vh;
+    padding:36px 20px 60px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:900px;margin:0 auto;}
+
+  header.app-head{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:22px;flex-wrap:wrap;gap:12px;
+  }
+  .brand h1{
+    font-weight:800;font-size:26px;margin:0;letter-spacing:-0.02em;color:var(--ink);
+  }
+  .brand p{margin:4px 0 0;font-size:13px;color:var(--ink-faint);}
+  .settings-toggle{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-weight:600;font-size:13px;color:var(--ink-soft);
+    background:var(--surface);border:1px solid var(--border);border-radius:999px;
+    padding:9px 16px;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .15s;
+    display:flex;align-items:center;gap:6px;
+  }
+  .settings-toggle:hover{border-color:var(--accent);color:var(--accent);}
+
+  .settings-panel{
+    display:none;background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--r-lg);padding:20px;margin-bottom:20px;box-shadow:var(--shadow-sm);
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;
+  }
+  .settings-panel.open{display:grid;}
+  .field label{
+    display:block;font-size:12px;font-weight:600;color:var(--ink-soft);margin-bottom:7px;
+  }
+  .field input{
+    width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--r-sm);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;background:var(--bg);color:var(--ink);
+    transition:border-color .15s;
+  }
+  .field input:focus{outline:none;border-color:var(--accent);background:var(--surface);}
+
+  /* Tabs */
+  .tabs{display:flex;gap:6px;margin-bottom:20px;overflow-x:auto;padding-bottom:2px;}
+  .tab-btn{
+    flex:0 0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-weight:600;font-size:13.5px;
+    color:var(--ink-soft);background:transparent;border:none;border-radius:999px;
+    padding:9px 16px;cursor:pointer;transition:all .15s;white-space:nowrap;
+  }
+  .tab-btn:hover{color:var(--ink);background:var(--surface);}
+  .tab-btn.active{background:var(--ink);color:#fff;}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+
+  /* Day rail */
+  .day-rail-row{display:flex;gap:10px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+  .day-rail{display:flex;gap:8px;align-items:center;overflow-x:auto;padding:2px;flex:1 1 auto;min-width:0;}
+  .day-chip{
+    flex:0 0 auto;font-size:13px;
+    padding:10px 16px;border-radius:999px;border:1px solid var(--border);
+    background:var(--surface);color:var(--ink-soft);cursor:pointer;white-space:nowrap;
+    display:flex;flex-direction:column;gap:1px;line-height:1.25;transition:all .15s;box-shadow:var(--shadow-sm);
+  }
+  .day-chip:hover{border-color:var(--accent);}
+  .day-chip .d-label{font-weight:600;color:var(--ink);}
+  .day-chip .d-sub{font-size:10.5px;color:var(--ink-faint);}
+  .day-chip.active{background:var(--ink);border-color:var(--ink);}
+  .day-chip.active .d-label,.day-chip.active .d-sub{color:#fff;}
+  .day-chip.today:not(.active){border-color:var(--accent);color:var(--accent);}
+  .day-chip.today:not(.active) .d-label{color:var(--accent);}
+
+  .add-day{
+    flex:0 0 auto;display:flex;gap:8px;align-items:center;
+    background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px 8px 6px 14px;
+    box-shadow:var(--shadow-sm);
+  }
+  .add-day input[type=date]{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:13px;border:none;background:transparent;color:var(--ink);
+  }
+  .add-day input[type=date]:focus{outline:none;}
+  .add-day button{
+    font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px;
+    background:var(--accent-soft);color:var(--accent);border:none;border-radius:999px;
+    padding:7px 12px;cursor:pointer;transition:all .15s;white-space:nowrap;
+  }
+  .add-day button:hover{background:var(--accent);color:#fff;}
+
+  /* Gauges */
+  .gauge-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:22px;}
+  .gauge-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
+    padding:18px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow-sm);
+  }
+  .gauge-card svg{flex:0 0 auto;}
+  .gauge-meta .g-label{
+    font-size:11.5px;font-weight:600;text-transform:uppercase;
+    letter-spacing:.04em;color:var(--ink-faint);margin-bottom:4px;
+  }
+  .gauge-meta .g-value{font-weight:800;font-size:21px;letter-spacing:-0.01em;}
+  .gauge-meta .g-target{font-size:11.5px;color:var(--ink-faint);margin-top:1px;}
+
+  /* Panels */
+  .panels{display:grid;grid-template-columns:1.15fr 1fr;gap:14px;margin-bottom:20px;}
+  @media (max-width:760px){.panels{grid-template-columns:1fr;} .gauge-row{grid-template-columns:1fr;}}
+
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;box-shadow:var(--shadow-sm);}
+  .panel h2{
+    font-size:15px;font-weight:700;margin:0 0 14px;letter-spacing:-0.01em;
+  }
+  .panel h2 .sub{font-size:12px;font-weight:500;color:var(--ink-faint);margin-left:6px;}
+
+  /* Entry table */
+  table.entries{width:100%;border-collapse:collapse;font-size:13.5px;}
+  table.entries th{
+    text-align:left;font-size:11px;font-weight:600;color:var(--ink-faint);
+    text-transform:uppercase;letter-spacing:.04em;padding:0 6px 10px;border-bottom:1px solid var(--border);
+  }
+  table.entries td{padding:10px 6px;border-bottom:1px solid var(--border);vertical-align:middle;}
+  table.entries tr:last-child td{border-bottom:none;}
+  table.entries td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.entries input.grams{
+    width:56px;font-size:13px;padding:5px 7px;
+    border:1px solid var(--border);border-radius:8px;text-align:right;background:var(--bg);
+  }
+  table.entries input.grams:focus{outline:none;border-color:var(--accent);}
+  .del-btn{
+    background:none;border:none;color:var(--ink-faint);cursor:pointer;font-size:15px;padding:2px 4px;
+    border-radius:6px;transition:all .15s;
+  }
+  .del-btn:hover{color:var(--warn);background:#FBEAE8;}
+  .empty-note{color:var(--ink-faint);font-size:13px;padding:12px 0;}
+  tfoot td{
+    font-weight:700;padding-top:12px;border-top:1px solid var(--ink);
+    border-bottom:none;font-variant-numeric:tabular-nums;
+  }
+
+  /* Add form */
+  .search-wrap{position:relative;margin-bottom:10px;}
+  .search-wrap input{
+    width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:var(--r-sm);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;background:var(--bg);
+  }
+  .search-wrap input:focus{outline:none;border-color:var(--accent);background:var(--surface);}
+  .dropdown{
+    position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--surface);
+    border:1px solid var(--border);border-radius:var(--r-md);max-height:230px;overflow-y:auto;
+    box-shadow:var(--shadow-md);z-index:5;display:none;
+  }
+  .dropdown.open{display:block;}
+  .dd-item{padding:10px 14px;cursor:pointer;font-size:13.5px;display:flex;justify-content:space-between;gap:8px;}
+  .dd-item:hover{background:var(--accent-soft);}
+  .dd-item .dd-macro{font-size:11.5px;color:var(--ink-faint);white-space:nowrap;font-variant-numeric:tabular-nums;}
+
+  .selected-food{
+    display:none;background:var(--accent-soft);border-radius:var(--r-sm);padding:11px 14px;margin-bottom:10px;
+    font-size:13px;justify-content:space-between;align-items:center;gap:8px;
+  }
+  .selected-food.show{display:flex;}
+  .selected-food .sf-name{font-weight:600;color:var(--accent-dark);}
+  .selected-food .sf-macro{font-size:11.5px;color:var(--accent-dark);opacity:.85;}
+  .selected-food button{background:none;border:none;color:var(--accent-dark);cursor:pointer;font-size:14px;}
+
+  .grams-row{display:flex;gap:8px;margin-bottom:10px;}
+  .grams-row input{
+    flex:1;padding:11px 14px;border:1px solid var(--border);border-radius:var(--r-sm);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;background:var(--bg);
+  }
+  .grams-row input:focus{outline:none;border-color:var(--accent);background:var(--surface);}
+  .btn{
+    font-weight:600;font-size:13.5px;
+    background:var(--accent);color:#fff;border:none;border-radius:var(--r-sm);padding:11px 16px;cursor:pointer;
+    transition:background .15s;
+  }
+  .btn:hover{background:var(--accent-dark);}
+  .btn:disabled{background:var(--ink-faint);cursor:not-allowed;}
+  .btn.full{width:100%;}
+  .btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--border);}
+  .btn.ghost:hover{background:var(--accent-soft);border-color:var(--accent);}
+  .btn.sm{padding:7px 12px;font-size:12.5px;}
+
+  .divider-label{
+    font-size:11px;font-weight:600;text-transform:uppercase;
+    letter-spacing:.05em;color:var(--ink-faint);text-align:center;margin:16px 0 12px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .divider-label::before,.divider-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  .mode-toggle{display:flex;gap:6px;margin-bottom:12px;background:var(--bg);border-radius:999px;padding:4px;}
+  .mode-btn{
+    flex:1;text-align:center;font-size:12.5px;font-weight:600;color:var(--ink-soft);
+    background:transparent;border:none;border-radius:999px;padding:8px 10px;cursor:pointer;transition:all .15s;
+  }
+  .mode-btn.active{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-sm);}
+
+  .cf-row2 input, .cf-row3 input{
+    width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--r-sm);font-size:13.5px;background:var(--bg);
+  }
+  .cf-row2 input:focus, .cf-row3 input:focus{outline:none;border-color:var(--accent);background:var(--surface);}
+  .cf-hint{font-size:11.5px;color:var(--ink-faint);margin:-2px 0 2px;}
+  .cf-row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+  .cf-row2 label{font-size:11px;font-weight:600;color:var(--ink-soft);display:block;margin-bottom:5px;}
+  .cf-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+  .cf-row3 label{font-size:11px;font-weight:600;color:var(--ink-soft);display:block;margin-bottom:5px;}
+  .cf-amount-block label{font-size:11px;font-weight:600;color:var(--ink-soft);display:block;margin-bottom:5px;}
+  .cf-preview{
+    font-size:12px;color:var(--green);background:var(--green-soft);border-radius:8px;padding:8px 10px;display:none;
+  }
+  .cf-preview.show{display:block;}
+
+  /* Stats / weight tabs */
+  .chart-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;box-shadow:var(--shadow-sm);}
+  .chart-card h2{font-size:15px;font-weight:700;margin:0 0 4px;}
+  .chart-card .chart-sub{font-size:12.5px;color:var(--ink-faint);margin-bottom:14px;}
+  .chart-empty{color:var(--ink-faint);font-size:13px;padding:30px 0;text-align:center;}
+  .range-toggle{display:flex;gap:6px;margin-bottom:14px;}
+  .range-btn{
+    font-size:12.5px;font-weight:600;color:var(--ink-soft);background:var(--bg);border:1px solid var(--border);
+    border-radius:999px;padding:6px 13px;cursor:pointer;transition:all .15s;
+  }
+  .range-btn.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+
+  .weight-form{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+  .weight-form input{
+    padding:10px 12px;border:1px solid var(--border);border-radius:var(--r-sm);font-size:13.5px;background:var(--bg);
+  }
+  .weight-form input:focus{outline:none;border-color:var(--accent);background:var(--surface);}
+  .weight-form input[type=date]{flex:1 1 150px;}
+  .weight-form input[type=number]{flex:1 1 100px;}
+
+  .weight-list{margin-top:14px;font-size:13px;}
+  .weight-list .wl-row{display:flex;justify-content:space-between;align-items:center;padding:8px 2px;border-bottom:1px solid var(--border);}
+  .weight-list .wl-row:last-child{border-bottom:none;}
+  .weight-list .wl-date{color:var(--ink-soft);}
+  .weight-list .wl-kg{font-weight:600;font-variant-numeric:tabular-nums;}
+
+  /* Foods table tab */
+  .foods-search{margin-bottom:14px;}
+  .foods-search input{
+    width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:var(--r-sm);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;background:var(--bg);
+  }
+  .foods-search input:focus{outline:none;border-color:var(--accent);background:var(--surface);}
+  table.foods-table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  table.foods-table th{
+    text-align:left;font-size:11px;font-weight:600;color:var(--ink-faint);
+    text-transform:uppercase;letter-spacing:.04em;padding:0 8px 10px;border-bottom:1px solid var(--border);
+  }
+  table.foods-table td{padding:10px 8px;border-bottom:1px solid var(--border);}
+  table.foods-table td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.foods-table th.sortable{cursor:pointer;user-select:none;white-space:nowrap;transition:color .15s;}
+  table.foods-table th.sortable:hover{color:var(--accent);}
+  .badge-custom{
+    font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-soft);
+    padding:2px 7px;border-radius:999px;margin-left:6px;text-transform:uppercase;letter-spacing:.03em;
+  }
+
+  footer{
+    text-align:center;font-size:12px;color:var(--ink-faint);
+    margin-top:34px;
+  }
+  #status-msg{
+    position:fixed;bottom:20px;right:20px;background:var(--ink);color:#fff;
+    font-size:13px;font-weight:500;padding:10px 16px;border-radius:999px;
+    opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none;box-shadow:var(--shadow-md);
+  }
+  #status-msg.show{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="app-head">
+    <div class="brand">
+      <h1>Nährwert-Log</h1>
+      <p>Kalorien, Protein & Kosten im Blick</p>
+    </div>
+    <button class="settings-toggle" id="settingsToggle">Ziele einstellen</button>
+  </header>
+
+  <div class="settings-panel" id="settingsPanel">
+    <div class="field">
+      <label>Kalorienziel (kcal/Tag)</label>
+      <input type="number" id="goalKcal" min="0" step="10">
+    </div>
+    <div class="field">
+      <label>Proteinziel (g/Tag)</label>
+      <input type="number" id="goalProtein" min="0" step="1">
+    </div>
+    <div class="field">
+      <label>Budgetziel (€/Tag, optional)</label>
+      <input type="number" id="goalPrice" min="0" step="0.5">
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="log">Tagebuch</button>
+    <button class="tab-btn" data-tab="stats">Kalorien-Verlauf</button>
+    <button class="tab-btn" data-tab="weight">Gewicht</button>
+    <button class="tab-btn" data-tab="foods">Lebensmittel</button>
+  </div>
+
+  <!-- TAB: Tagebuch -->
+  <div class="tab-panel active" id="tab-log">
+    <div class="day-rail-row">
+      <div class="day-rail" id="dayRail"></div>
+      <div class="add-day" id="addDayControl">
+        <input type="date" id="newDayInput">
+        <button id="newDayBtn" title="Diesen Tag zum Tagebuch hinzufügen">+ Tag hinzufügen</button>
+      </div>
+    </div>
+
+    <div class="gauge-row">
+      <div class="gauge-card" id="gaugeKcal"></div>
+      <div class="gauge-card" id="gaugeProtein"></div>
+      <div class="gauge-card" id="gaugePrice"></div>
+    </div>
+
+    <div class="panels">
+      <div class="panel">
+        <h2 id="tableHeading">Einträge</h2>
+        <table class="entries">
+          <thead>
+            <tr><th>Lebensmittel</th><th style="text-align:right">Gramm</th><th style="text-align:right">Kcal</th><th style="text-align:right">Protein</th><th style="text-align:right">Preis</th><th></th></tr>
+          </thead>
+          <tbody id="entriesBody"></tbody>
+          <tfoot>
+            <tr>
+              <td>Summe</td><td></td>
+              <td class="num" id="sumKcal">0</td>
+              <td class="num" id="sumProtein">0 g</td>
+              <td class="num" id="sumPrice">0,00 €</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="panel">
+        <h2>Lebensmittel hinzufügen</h2>
+        <div class="search-wrap">
+          <input type="text" id="foodSearch" placeholder="Suchen … z. B. Hähnchen, Reis" autocomplete="off">
+          <div class="dropdown" id="foodDropdown"></div>
+        </div>
+        <div class="selected-food" id="selectedFood">
+          <div>
+            <div class="sf-name" id="sfName"></div>
+            <div class="sf-macro" id="sfMacro"></div>
+          </div>
+          <button id="sfClear">✕</button>
+        </div>
+        <div class="grams-row">
+          <input type="number" id="gramsInput" placeholder="Menge in Gramm" min="1">
+          <button class="btn" id="addEntryBtn" disabled>Hinzufügen</button>
+        </div>
+        <div class="cf-hint">Neues Lebensmittel anlegen kannst du im Reiter „Lebensmittel".</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: Kalorien-Verlauf -->
+  <div class="tab-panel" id="tab-stats">
+    <div class="chart-card">
+      <h2>Kalorien der letzten 30 Tage</h2>
+      <div class="chart-sub">Gestrichelte Linie = dein Kalorienziel</div>
+      <div id="kcalChartWrap"><div class="chart-empty">Lädt …</div></div>
+    </div>
+  </div>
+
+  <!-- TAB: Gewicht -->
+  <div class="tab-panel" id="tab-weight">
+    <div class="chart-card" style="margin-bottom:14px;">
+      <h2>Gewicht eintragen</h2>
+      <div class="weight-form">
+        <input type="date" id="weightDate">
+        <input type="number" id="weightKg" placeholder="Gewicht in kg" step="0.1" min="0">
+        <button class="btn" id="addWeightBtn">Hinzufügen</button>
+      </div>
+    </div>
+    <div class="chart-card">
+      <h2>Verlauf</h2>
+      <div class="range-toggle">
+        <button class="range-btn" data-range="7">1 Woche</button>
+        <button class="range-btn active" data-range="30">1 Monat</button>
+        <button class="range-btn" data-range="365">1 Jahr</button>
+        <button class="range-btn" data-range="1825">5 Jahre</button>
+      </div>
+      <div id="weightChartWrap"><div class="chart-empty">Noch keine Einträge.</div></div>
+      <div class="weight-list" id="weightList"></div>
+    </div>
+  </div>
+
+  <!-- TAB: Lebensmittel -->
+  <div class="tab-panel" id="tab-foods">
+    <div class="panel" style="margin-bottom:14px;">
+      <h2>Neues Lebensmittel anlegen</h2>
+      <input type="text" id="cfName" placeholder="Name, z. B. Banane" style="width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:var(--r-sm);font-size:14px;background:var(--bg);margin-bottom:12px;">
+
+      <div class="cf-row2">
+        <div>
+          <label>Kcal pro 100 g</label>
+          <input type="number" id="cfKcal" placeholder="z. B. 50" min="0">
+        </div>
+        <div>
+          <label>Protein pro 100 g</label>
+          <input type="number" id="cfProtein" placeholder="z. B. 1,1" min="0">
+        </div>
+      </div>
+
+      <div class="divider-label">Preis</div>
+      <div class="cf-row2">
+        <div>
+          <label>Gewicht der Packung (g)</label>
+          <input type="number" id="cfWeight" placeholder="z. B. 500" min="1" value="100">
+        </div>
+        <div>
+          <label>Preis für die Packung (€)</label>
+          <input type="number" id="cfPackagePrice" placeholder="z. B. 2,00" min="0" step="0.01">
+        </div>
+      </div>
+      <div class="cf-hint">Gewicht auf 100 lassen, wenn du den Preis direkt pro 100 g kennst — sonst z. B. 500 g für 2 €, der Rest wird automatisch umgerechnet.</div>
+      <div class="cf-preview" id="cfPreview"></div>
+      <button class="btn full" id="cfSave" style="margin-top:10px;">Speichern & zur Datenbank hinzufügen</button>
+    </div>
+
+    <div class="panel">
+      <h2>Alle Lebensmittel <span class="sub" id="foodsCount"></span></h2>
+      <div class="foods-search">
+        <input type="text" id="foodsFilter" placeholder="Filtern …" autocomplete="off">
+      </div>
+      <table class="foods-table">
+        <thead id="foodsTableHead"></thead>
+        <tbody id="foodsTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>Alle Werte sind Richtwerte pro 100 g · Läuft komplett offline · Daten werden nur lokal in diesem Browser gespeichert</footer>
+</div>
+
+<div id="status-msg"></div>
+
+<script>
+/* ---------- Lebensmittel-Datenbank (Werte je 100 g) ---------- */
+const BUILTIN_FOODS = [
+  {name:"Hähnchenbrust (roh)", kcal:110, protein:23, price:0.90},
+  {name:"Rinderhack (10% Fett)", kcal:212, protein:18, price:1.10},
+  {name:"Lachs (roh)", kcal:208, protein:20, price:2.20},
+  {name:"Thunfisch (Dose, im eigenen Saft)", kcal:116, protein:26, price:0.80},
+  {name:"Eier (Stück ~55g)", kcal:70, protein:6.3, price:0.35},
+  {name:"Magerquark", kcal:67, protein:12, price:0.35},
+  {name:"Skyr", kcal:63, protein:11, price:0.45},
+  {name:"Griechischer Joghurt", kcal:97, protein:9, price:0.50},
+  {name:"Milch (1,5%)", kcal:47, protein:3.4, price:0.11},
+  {name:"Gouda", kcal:356, protein:25, price:1.30},
+  {name:"Tofu", kcal:120, protein:13, price:0.60},
+  {name:"Reis (roh)", kcal:349, protein:7, price:0.25},
+  {name:"Nudeln (roh)", kcal:353, protein:12, price:0.20},
+  {name:"Kartoffeln (roh)", kcal:77, protein:2, price:0.15},
+  {name:"Süßkartoffel (roh)", kcal:86, protein:1.6, price:0.35},
+  {name:"Haferflocken", kcal:372, protein:13, price:0.20},
+  {name:"Vollkornbrot", kcal:216, protein:8, price:0.35},
+  {name:"Mehl (Weizen)", kcal:364, protein:10, price:0.10},
+  {name:"Linsen (roh)", kcal:353, protein:25, price:0.35},
+  {name:"Kichererbsen (Dose)", kcal:139, protein:7, price:0.25},
+  {name:"Brokkoli", kcal:34, protein:2.8, price:0.35},
+  {name:"Paprika", kcal:31, protein:1, price:0.45},
+  {name:"Tomate", kcal:18, protein:0.9, price:0.30},
+  {name:"Zwiebel", kcal:40, protein:1.1, price:0.10},
+  {name:"Gurke", kcal:12, protein:0.7, price:0.20},
+  {name:"Banane", kcal:89, protein:1.1, price:0.25},
+  {name:"Apfel", kcal:52, protein:0.3, price:0.30},
+  {name:"Avocado", kcal:160, protein:2, price:1.00},
+  {name:"Mandeln", kcal:579, protein:21, price:1.90},
+  {name:"Walnüsse", kcal:654, protein:15, price:1.80},
+  {name:"Erdnussbutter", kcal:588, protein:25, price:1.20},
+  {name:"Olivenöl", kcal:884, protein:0, price:1.50},
+  {name:"Butter", kcal:717, protein:0.9, price:0.90},
+  {name:"Honig", kcal:304, protein:0.3, price:0.60},
+  {name:"Zucker", kcal:400, protein:0, price:0.10},
+  {name:"Whey Protein (Pulver)", kcal:380, protein:75, price:2.50},
+  {name:"Nutella", kcal:539, protein:6, price:0.65},
+  {name:"Schokolade (Vollmilch)", kcal:534, protein:7, price:0.90},
+  {name:"Chips", kcal:536, protein:6, price:0.85},
+  {name:"Pizza (Tiefkühl)", kcal:266, protein:11, price:0.60},
+  {name:"Cola", kcal:42, protein:0, price:0.10},
+  {name:"Bier", kcal:43, protein:0.5, price:0.15},
+];
+
+let customFoods = [];
+let settings = {kcalGoal:2200, proteinGoal:150, priceGoal:0};
+let dayList = [];
+let currentDate = todayISO();
+let dayEntries = [];
+let selectedFood = null;
+let weights = [];
+let weightRange = 30;
+let foodsSortKey = 'name';
+let foodsSortDir = 'asc';
+
+function todayISO(){
+  const d = new Date();
+  return d.toISOString().slice(0,10);
+}
+function isoDaysAgo(n){
+  const d = new Date();
+  d.setDate(d.getDate()-n);
+  return d.toISOString().slice(0,10);
+}
+function fmtDateLabel(iso){
+  const d = new Date(iso+"T00:00:00");
+  const days=["So","Mo","Di","Mi","Do","Fr","Sa"];
+  const wd = days[d.getDay()];
+  const dd = String(d.getDate()).padStart(2,'0');
+  const mm = String(d.getMonth()+1).padStart(2,'0');
+  return {wd, sub: `${dd}.${mm}.`};
+}
+function fmtShort(iso){
+  const d = new Date(iso+"T00:00:00");
+  const dd = String(d.getDate()).padStart(2,'0');
+  const mm = String(d.getMonth()+1).padStart(2,'0');
+  return `${dd}.${mm}.`;
+}
+function showStatus(msg){
+  const el = document.getElementById('status-msg');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(showStatus._t);
+  showStatus._t = setTimeout(()=>el.classList.remove('show'), 1800);
+}
+
+/* ---------- Storage (lokal im Browser, offline, kein Konto nötig) ---------- */
+function lsGet(key){
+  try{ return localStorage.getItem(key); }
+  catch(e){ return null; }
+}
+function lsSet(key, value){
+  try{ localStorage.setItem(key, value); return true; }
+  catch(e){ return false; }
+}
+function lsKeysWithPrefix(prefix){
+  const keys = [];
+  try{
+    for(let i=0;i<localStorage.length;i++){
+      const k = localStorage.key(i);
+      if(k && k.indexOf(prefix)===0) keys.push(k);
+    }
+  }catch(e){}
+  return keys;
+}
+
+async function loadAll(){
+  try{
+    const s = lsGet('settings');
+    if(s) settings = {...settings, ...JSON.parse(s)};
+  }catch(e){}
+  try{
+    const c = lsGet('customFoods');
+    if(c) customFoods = JSON.parse(c);
+  }catch(e){}
+  try{
+    const dl = lsGet('dayList');
+    if(dl) dayList = JSON.parse(dl);
+  }catch(e){}
+  try{
+    const w = lsGet('weights');
+    if(w) weights = JSON.parse(w);
+  }catch(e){}
+  if(!dayList.includes(currentDate)){
+    dayList.push(currentDate);
+    dayList.sort();
+    saveDayList();
+  }
+  loadDay(currentDate);
+}
+
+function saveSettings(){
+  if(!lsSet('settings', JSON.stringify(settings))) showStatus('Speichern fehlgeschlagen');
+}
+function saveCustomFoods(){
+  if(!lsSet('customFoods', JSON.stringify(customFoods))) showStatus('Speichern fehlgeschlagen');
+}
+function saveDayList(){
+  if(!lsSet('dayList', JSON.stringify(dayList))) showStatus('Speichern fehlgeschlagen');
+}
+function loadDay(date){
+  const r = lsGet('day:'+date);
+  dayEntries = r ? JSON.parse(r) : [];
+}
+function saveDay(date){
+  if(!lsSet('day:'+date, JSON.stringify(dayEntries))) showStatus('Speichern fehlgeschlagen');
+}
+function saveWeights(){
+  if(!lsSet('weights', JSON.stringify(weights))) showStatus('Speichern fehlgeschlagen');
+}
+
+/* ---------- Tabs ---------- */
+function initTabs(){
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.onclick = ()=>{
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.dataset.tab;
+      document.getElementById('tab-'+tab).classList.add('active');
+      if(tab==='stats') renderStatsChart();
+      if(tab==='weight') renderWeightTab();
+      if(tab==='foods') renderFoodsTable();
+    };
+  });
+}
+
+/* ---------- Rendering: Tagebuch ---------- */
+function allFoods(){ return [...BUILTIN_FOODS, ...customFoods]; }
+
+function renderDayRail(){
+  const rail = document.getElementById('dayRail');
+  rail.innerHTML = '';
+  const today = todayISO();
+  dayList.slice().sort().forEach(date=>{
+    const chip = document.createElement('div');
+    chip.className = 'day-chip' + (date===currentDate?' active':'') + (date===today?' today':'');
+    const {wd, sub} = fmtDateLabel(date);
+    chip.innerHTML = `<span class="d-label">${wd}${date===today?' · heute':''}</span><span class="d-sub">${sub}</span>`;
+    chip.onclick = async ()=>{
+      currentDate = date;
+      await loadDay(date);
+      renderDayRail();
+      renderTable();
+      renderGauges();
+    };
+    rail.appendChild(chip);
+  });
+}
+
+function initAddDayControl(){
+  const today = todayISO();
+  const input = document.getElementById('newDayInput');
+  input.min = today;
+  input.value = today;
+  document.getElementById('newDayBtn').onclick = async ()=>{
+    const val = input.value;
+    if(!val) return;
+    const alreadyExists = dayList.includes(val);
+    if(!alreadyExists){
+      dayList.push(val);
+      await saveDayList();
+    }
+    currentDate = val;
+    await loadDay(val);
+    renderDayRail();
+    renderTable();
+    renderGauges();
+    showStatus(alreadyExists ? 'Zu diesem Tag gewechselt' : 'Tag hinzugefügt');
+  };
+}
+
+function gaugeSVG(pct, color, softColor){
+  const r = 24, c = 2*Math.PI*r;
+  const clamped = Math.max(0, Math.min(1, pct));
+  const dash = c*clamped;
+  return `<svg width="58" height="58" viewBox="0 0 58 58">
+    <circle cx="29" cy="29" r="${r}" fill="none" stroke="${softColor}" stroke-width="5.5"/>
+    <circle cx="29" cy="29" r="${r}" fill="none" stroke="${color}" stroke-width="5.5"
+      stroke-dasharray="${dash} ${c}" stroke-linecap="round"
+      transform="rotate(-90 29 29)" style="transition:stroke-dasharray .3s"/>
+  </svg>`;
+}
+
+function computeTotals(){
+  let kcal=0, protein=0, price=0;
+  dayEntries.forEach(e=>{
+    const factor = e.grams/100;
+    kcal += e.kcal100*factor;
+    protein += e.protein100*factor;
+    price += e.price100*factor;
+  });
+  return {kcal, protein, price};
+}
+
+function renderGauges(){
+  const t = computeTotals();
+  const kcalPct = settings.kcalGoal>0 ? t.kcal/settings.kcalGoal : 0;
+  const proPct = settings.proteinGoal>0 ? t.protein/settings.proteinGoal : 0;
+  const pricePct = settings.priceGoal>0 ? t.price/settings.priceGoal : 0;
+
+  document.getElementById('gaugeKcal').innerHTML = `
+    ${gaugeSVG(kcalPct, kcalPct>1?'#DC4C3F':'#4F46E5', '#EEECFD')}
+    <div class="gauge-meta">
+      <div class="g-label">Kalorien</div>
+      <div class="g-value">${Math.round(t.kcal)}</div>
+      <div class="g-target">Ziel ${settings.kcalGoal} kcal</div>
+    </div>`;
+  document.getElementById('gaugeProtein').innerHTML = `
+    ${gaugeSVG(proPct, '#0EA972', '#E3F7EE')}
+    <div class="gauge-meta">
+      <div class="g-label">Protein</div>
+      <div class="g-value">${t.protein.toFixed(1)} g</div>
+      <div class="g-target">Ziel ${settings.proteinGoal} g</div>
+    </div>`;
+  document.getElementById('gaugePrice').innerHTML = `
+    ${gaugeSVG(settings.priceGoal>0?pricePct:0, '#B7791F', '#FBF0DD')}
+    <div class="gauge-meta">
+      <div class="g-label">Kosten</div>
+      <div class="g-value">${t.price.toFixed(2)} €</div>
+      <div class="g-target">${settings.priceGoal>0 ? 'Budget '+settings.priceGoal.toFixed(2)+' €' : 'kein Budgetziel'}</div>
+    </div>`;
+}
+
+function renderTable(){
+  const {wd,sub} = fmtDateLabel(currentDate);
+  document.getElementById('tableHeading').textContent = `Einträge · ${wd} ${sub}`;
+  const body = document.getElementById('entriesBody');
+  body.innerHTML = '';
+  if(dayEntries.length===0){
+    body.innerHTML = `<tr><td colspan="6" class="empty-note">Noch keine Einträge für diesen Tag.</td></tr>`;
+  }else{
+    dayEntries.forEach((e, idx)=>{
+      const factor = e.grams/100;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${e.name}</td>
+        <td class="num"><input type="number" class="grams" data-idx="${idx}" value="${e.grams}" min="1"></td>
+        <td class="num">${Math.round(e.kcal100*factor)}</td>
+        <td class="num">${(e.protein100*factor).toFixed(1)} g</td>
+        <td class="num">${(e.price100*factor).toFixed(2)} €</td>
+        <td><button class="del-btn" data-idx="${idx}" title="Entfernen">✕</button></td>`;
+      body.appendChild(tr);
+    });
+  }
+  body.querySelectorAll('input.grams').forEach(inp=>{
+    inp.onchange = async (ev)=>{
+      const idx = parseInt(ev.target.dataset.idx);
+      const val = Math.max(1, parseFloat(ev.target.value)||1);
+      dayEntries[idx].grams = val;
+      await saveDay(currentDate);
+      renderTable();
+      renderGauges();
+    };
+  });
+  body.querySelectorAll('.del-btn').forEach(btn=>{
+    btn.onclick = async (ev)=>{
+      const idx = parseInt(ev.target.dataset.idx);
+      dayEntries.splice(idx,1);
+      await saveDay(currentDate);
+      renderTable();
+      renderGauges();
+    };
+  });
+
+  const t = computeTotals();
+  document.getElementById('sumKcal').textContent = Math.round(t.kcal);
+  document.getElementById('sumProtein').textContent = t.protein.toFixed(1)+' g';
+  document.getElementById('sumPrice').textContent = t.price.toFixed(2)+' €';
+}
+
+/* ---------- Food search / add ---------- */
+function renderDropdown(query){
+  const dd = document.getElementById('foodDropdown');
+  const q = query.trim().toLowerCase();
+  if(q.length===0){ dd.classList.remove('open'); dd.innerHTML=''; return; }
+  const matches = allFoods().filter(f=>f.name.toLowerCase().includes(q)).slice(0,8);
+  if(matches.length===0){
+    dd.innerHTML = `<div class="dd-item" style="color:var(--ink-faint)">Keine Treffer</div>`;
+    dd.classList.add('open');
+    return;
+  }
+  dd.innerHTML = matches.map(f=>`
+    <div class="dd-item" data-name="${f.name}">
+      <span>${f.name}</span>
+      <span class="dd-macro">${f.kcal} kcal · ${f.protein}g P /100g</span>
+    </div>`).join('');
+  dd.classList.add('open');
+  dd.querySelectorAll('.dd-item').forEach(item=>{
+    item.onclick = ()=>{
+      const f = allFoods().find(x=>x.name===item.dataset.name);
+      selectFood(f);
+      dd.classList.remove('open');
+      document.getElementById('foodSearch').value = '';
+    };
+  });
+}
+
+function selectFood(f){
+  selectedFood = f;
+  document.getElementById('sfName').textContent = f.name;
+  document.getElementById('sfMacro').textContent = `${f.kcal} kcal · ${f.protein} g Protein · ${f.price.toFixed(2)} € /100g`;
+  document.getElementById('selectedFood').classList.add('show');
+  document.getElementById('addEntryBtn').disabled = false;
+}
+function clearSelectedFood(){
+  selectedFood = null;
+  document.getElementById('selectedFood').classList.remove('show');
+  document.getElementById('addEntryBtn').disabled = true;
+}
+
+async function addEntry(){
+  const grams = parseFloat(document.getElementById('gramsInput').value);
+  if(!selectedFood || !grams || grams<=0){ showStatus('Bitte Lebensmittel und Menge angeben'); return; }
+  dayEntries.push({
+    name: selectedFood.name,
+    kcal100: selectedFood.kcal,
+    protein100: selectedFood.protein,
+    price100: selectedFood.price,
+    grams: grams
+  });
+  await saveDay(currentDate);
+  renderTable();
+  renderGauges();
+  document.getElementById('gramsInput').value = '';
+  clearSelectedFood();
+  showStatus('Hinzugefügt');
+}
+
+/* ---------- Eigenes Produkt: Nährwerte direkt /100g, Preis über Packung umgerechnet ---------- */
+function updateCfPreview(){
+  const weight = parseFloat(document.getElementById('cfWeight').value);
+  const packagePrice = parseFloat(document.getElementById('cfPackagePrice').value);
+  const preview = document.getElementById('cfPreview');
+  if(!weight || weight<=0 || isNaN(packagePrice)){
+    preview.classList.remove('show');
+    return;
+  }
+  const price100 = (packagePrice*100/weight).toFixed(2);
+  if(weight===100){
+    preview.classList.remove('show');
+    return;
+  }
+  preview.textContent = `≈ ${price100} € pro 100 g`;
+  preview.classList.add('show');
+}
+
+/* ---------- Kalorien-Verlauf (30 Tage) ---------- */
+function svgBarChart(data, goal){
+  const w = 720, h = 220, padL = 34, padB = 22, padT = 10, padR = 6;
+  const plotW = w - padL - padR, plotH = h - padT - padB;
+  const maxVal = Math.max(goal||0, ...data.map(d=>d.kcal), 100) * 1.12;
+  const barGap = 3;
+  const barW = plotW/data.length - barGap;
+  let bars = '';
+  data.forEach((d,i)=>{
+    const bh = (d.kcal/maxVal)*plotH;
+    const x = padL + i*(plotW/data.length) + barGap/2;
+    const y = padT + plotH - bh;
+    const isToday = d.date === todayISO();
+    bars += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${bh.toFixed(1)}" rx="2" fill="${isToday?'#4F46E5':'#C7C2F5'}"><title>${fmtShort(d.date)}: ${Math.round(d.kcal)} kcal</title></rect>`;
+  });
+  let goalLine = '';
+  if(goal>0 && goal<=maxVal){
+    const gy = padT + plotH - (goal/maxVal)*plotH;
+    goalLine = `<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${w-padR}" y2="${gy.toFixed(1)}" stroke="#DC4C3F" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+  }
+  const labelIdxs = [0, Math.floor(data.length/2), data.length-1];
+  let labels = '';
+  labelIdxs.forEach(i=>{
+    const x = padL + i*(plotW/data.length) + (plotW/data.length)/2;
+    labels += `<text x="${x.toFixed(1)}" y="${h-4}" font-size="10.5" fill="#A6A8B3" text-anchor="middle" font-family="Inter,sans-serif">${fmtShort(data[i].date)}</text>`;
+  });
+  const yMaxLabel = `<text x="4" y="${padT+10}" font-size="10.5" fill="#A6A8B3" font-family="Inter,sans-serif">${Math.round(maxVal)}</text>`;
+  const yZeroLabel = `<text x="4" y="${padT+plotH}" font-size="10.5" fill="#A6A8B3" font-family="Inter,sans-serif">0</text>`;
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" style="display:block">${bars}${goalLine}${labels}${yMaxLabel}${yZeroLabel}</svg>`;
+}
+
+function renderStatsChart(){
+  const wrap = document.getElementById('kcalChartWrap');
+  const dates = [];
+  for(let i=29;i>=0;i--) dates.push(isoDaysAgo(i));
+
+  const existingKeys = lsKeysWithPrefix('day:');
+
+  const data = dates.map(date=>{
+    const key = 'day:'+date;
+    let kcal = 0;
+    if(existingKeys.includes(key)){
+      try{
+        const r = lsGet(key);
+        if(r) JSON.parse(r).forEach(e=>{ kcal += e.kcal100*(e.grams/100); });
+      }catch(e){}
+    }
+    return {date, kcal};
+  });
+  const anyData = data.some(d=>d.kcal>0);
+  if(!anyData){
+    wrap.innerHTML = `<div class="chart-empty">Noch keine Einträge in den letzten 30 Tagen.</div>`;
+    return;
+  }
+  wrap.innerHTML = svgBarChart(data, settings.kcalGoal);
+}
+
+/* ---------- Gewicht ---------- */
+function svgLineChart(points){
+  const w = 720, h = 220, padL = 40, padB = 22, padT = 12, padR = 12;
+  const plotW = w-padL-padR, plotH = h-padT-padB;
+  const kgs = points.map(p=>p.kg);
+  let minKg = Math.min(...kgs), maxKg = Math.max(...kgs);
+  if(minKg===maxKg){ minKg -= 1; maxKg += 1; }
+  const pad = (maxKg-minKg)*0.15;
+  minKg -= pad; maxKg += pad;
+  const times = points.map(p=>new Date(p.date+"T00:00:00").getTime());
+  const minT = Math.min(...times), maxT = Math.max(...times);
+  const spanT = Math.max(maxT-minT, 1);
+
+  const xy = points.map((p,i)=>{
+    const t = new Date(p.date+"T00:00:00").getTime();
+    const x = padL + ((t-minT)/spanT)*plotW;
+    const y = padT + plotH - ((p.kg-minKg)/(maxKg-minKg))*plotH;
+    return {x,y,p};
+  });
+  const path = xy.map((pt,i)=>(i===0?'M':'L')+pt.x.toFixed(1)+' '+pt.y.toFixed(1)).join(' ');
+  const dots = xy.map(pt=>`<circle cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="3" fill="#4F46E5"><title>${fmtShort(pt.p.date)}: ${pt.p.kg} kg</title></circle>`).join('');
+
+  const gridLines = [0,0.5,1].map(f=>{
+    const val = minKg + f*(maxKg-minKg);
+    const y = padT + plotH - f*plotH;
+    return `<line x1="${padL}" y1="${y.toFixed(1)}" x2="${w-padR}" y2="${y.toFixed(1)}" stroke="#EAEAEE" stroke-width="1"/>
+      <text x="4" y="${(y+4).toFixed(1)}" font-size="10.5" fill="#A6A8B3" font-family="Inter,sans-serif">${val.toFixed(1)}</text>`;
+  }).join('');
+
+  const firstLabel = fmtShort(points[0].date);
+  const lastLabel = fmtShort(points[points.length-1].date);
+  const xLabels = `
+    <text x="${padL}" y="${h-4}" font-size="10.5" fill="#A6A8B3" font-family="Inter,sans-serif">${firstLabel}</text>
+    <text x="${w-padR}" y="${h-4}" font-size="10.5" fill="#A6A8B3" text-anchor="end" font-family="Inter,sans-serif">${lastLabel}</text>`;
+
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" style="display:block">${gridLines}<path d="${path}" fill="none" stroke="#4F46E5" stroke-width="2"/>${dots}${xLabels}</svg>`;
+}
+
+function renderWeightChart(){
+  const wrap = document.getElementById('weightChartWrap');
+  const cutoff = isoDaysAgo(weightRange);
+  const filtered = weights.filter(w=>w.date>=cutoff).sort((a,b)=>a.date<b.date?-1:1);
+  if(filtered.length===0){
+    wrap.innerHTML = `<div class="chart-empty">Keine Einträge in diesem Zeitraum.</div>`;
+    return;
+  }
+  if(filtered.length===1){
+    wrap.innerHTML = `<div class="chart-empty">Noch ein zweiter Eintrag nötig, um einen Verlauf zu zeichnen.</div>`;
+    return;
+  }
+  wrap.innerHTML = svgLineChart(filtered);
+}
+
+function renderWeightList(){
+  const list = document.getElementById('weightList');
+  const sorted = weights.slice().sort((a,b)=>a.date<b.date?1:-1).slice(0,10);
+  if(sorted.length===0){ list.innerHTML=''; return; }
+  list.innerHTML = sorted.map(w=>{
+    const {wd,sub} = fmtDateLabel(w.date);
+    return `<div class="wl-row"><span class="wl-date">${wd} ${sub}</span><span class="wl-kg">${w.kg} kg</span></div>`;
+  }).join('');
+}
+
+function renderWeightTab(){
+  renderWeightChart();
+  renderWeightList();
+}
+
+/* ---------- Lebensmittel-Tabelle ---------- */
+const FOOD_COLUMNS = [
+  {key:'name', label:'Name', align:'left'},
+  {key:'kcal', label:'Kcal /100g', align:'right'},
+  {key:'protein', label:'Protein /100g', align:'right'},
+  {key:'ratio', label:'Protein /100kcal', align:'right'},
+  {key:'price', label:'Preis /100g', align:'right'},
+];
+
+function renderFoodsTableHead(){
+  const thead = document.getElementById('foodsTableHead');
+  thead.innerHTML = '<tr>' + FOOD_COLUMNS.map(c=>{
+    const arrow = foodsSortKey===c.key ? (foodsSortDir==='asc' ? ' ↑' : ' ↓') : '';
+    return `<th class="sortable" data-key="${c.key}" style="text-align:${c.align}">${c.label}${arrow}</th>`;
+  }).join('') + '<th></th></tr>';
+  thead.querySelectorAll('th.sortable').forEach(th=>{
+    th.onclick = ()=>{
+      const key = th.dataset.key;
+      if(foodsSortKey===key){
+        foodsSortDir = foodsSortDir==='asc' ? 'desc' : 'asc';
+      }else{
+        foodsSortKey = key;
+        foodsSortDir = key==='name' ? 'asc' : 'desc';
+      }
+      renderFoodsTable(document.getElementById('foodsFilter').value);
+    };
+  });
+}
+
+function renderFoodsTable(filter=''){
+  renderFoodsTableHead();
+  const body = document.getElementById('foodsTableBody');
+  const q = filter.trim().toLowerCase();
+  let list = allFoods()
+    .map((f,i)=>({
+      ...f,
+      isCustom: i>=BUILTIN_FOODS.length,
+      customIdx: i-BUILTIN_FOODS.length,
+      ratio: f.kcal>0 ? +(f.protein*100/f.kcal).toFixed(2) : null
+    }))
+    .filter(f=>f.name.toLowerCase().includes(q));
+
+  list.sort((a,b)=>{
+    if(foodsSortKey==='name'){
+      return foodsSortDir==='asc' ? a.name.localeCompare(b.name,'de') : b.name.localeCompare(a.name,'de');
+    }
+    let av = a[foodsSortKey], bv = b[foodsSortKey];
+    av = (av===null || av===undefined) ? -Infinity : av;
+    bv = (bv===null || bv===undefined) ? -Infinity : bv;
+    return foodsSortDir==='asc' ? av-bv : bv-av;
+  });
+
+  document.getElementById('foodsCount').textContent = `(${list.length})`;
+  if(list.length===0){
+    body.innerHTML = `<tr><td colspan="6" class="empty-note">Keine Treffer.</td></tr>`;
+    return;
+  }
+  body.innerHTML = list.map(f=>`
+    <tr>
+      <td>${f.name}${f.isCustom?'<span class="badge-custom">eigenes</span>':''}</td>
+      <td class="num">${f.kcal}</td>
+      <td class="num">${f.protein} g</td>
+      <td class="num">${f.ratio===null?'–':f.ratio}</td>
+      <td class="num">${f.price.toFixed(2)} €</td>
+      <td>${f.isCustom?`<button class="del-btn" data-idx="${f.customIdx}" title="Löschen">✕</button>`:''}</td>
+    </tr>`).join('');
+  body.querySelectorAll('.del-btn').forEach(btn=>{
+    btn.onclick = async (ev)=>{
+      const idx = parseInt(ev.target.dataset.idx);
+      customFoods.splice(idx,1);
+      await saveCustomFoods();
+      renderFoodsTable(document.getElementById('foodsFilter').value);
+      showStatus('Lebensmittel gelöscht');
+    };
+  });
+}
+
+/* ---------- Init & wiring ---------- */
+function storageWorks(){
+  try{
+    const testKey = '__storagecheck__';
+    localStorage.setItem(testKey, '1');
+    const ok = localStorage.getItem(testKey) === '1';
+    localStorage.removeItem(testKey);
+    return ok;
+  }catch(e){
+    return false;
+  }
+}
+
+async function init(){
+  if(!storageWorks()){
+    document.body.innerHTML = `
+      <div style="max-width:480px;margin:60px auto;padding:24px;background:#FFF;border:1px solid #EAEAEE;border-radius:20px;text-align:center;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+        <div style="font-size:22px;font-weight:800;margin-bottom:10px;">Speichern nicht möglich</div>
+        <div style="font-size:14px;color:#6C6E79;line-height:1.5;">
+          Dieser Browser (bzw. diese Ansicht) erlaubt gerade kein lokales Speichern.
+          Das passiert oft, wenn die Datei über eine Vorschau in WhatsApp, Mail oder der Dateien-App
+          geöffnet wurde, statt direkt im Browser.<br><br>
+          Öffne die Datei stattdessen bewusst über <b>"Öffnen mit" → Safari oder Chrome</b>,
+          oder aktiviere im privaten/inkognito Modus das Speichern für diese Seite.
+        </div>
+      </div>`;
+    return;
+  }
+  await loadAll();
+  document.getElementById('goalKcal').value = settings.kcalGoal;
+  document.getElementById('goalProtein').value = settings.proteinGoal;
+  document.getElementById('goalPrice').value = settings.priceGoal || '';
+  initTabs();
+  renderDayRail();
+  initAddDayControl();
+  renderTable();
+  renderGauges();
+
+  document.getElementById('settingsToggle').onclick = ()=>{
+    document.getElementById('settingsPanel').classList.toggle('open');
+  };
+  ['goalKcal','goalProtein','goalPrice'].forEach(id=>{
+    document.getElementById(id).onchange = async ()=>{
+      settings.kcalGoal = parseFloat(document.getElementById('goalKcal').value)||0;
+      settings.proteinGoal = parseFloat(document.getElementById('goalProtein').value)||0;
+      settings.priceGoal = parseFloat(document.getElementById('goalPrice').value)||0;
+      await saveSettings();
+      renderGauges();
+    };
+  });
+
+  const searchInput = document.getElementById('foodSearch');
+  searchInput.oninput = ()=>renderDropdown(searchInput.value);
+  searchInput.onfocus = ()=>renderDropdown(searchInput.value);
+  document.addEventListener('click', (ev)=>{
+    if(!ev.target.closest('.search-wrap')) document.getElementById('foodDropdown').classList.remove('open');
+  });
+  document.getElementById('sfClear').onclick = clearSelectedFood;
+  document.getElementById('addEntryBtn').onclick = addEntry;
+
+  ['cfWeight','cfPackagePrice'].forEach(id=>{
+    document.getElementById(id).oninput = updateCfPreview;
+  });
+  document.getElementById('cfSave').onclick = async ()=>{
+    const name = document.getElementById('cfName').value.trim();
+    const kcal = parseFloat(document.getElementById('cfKcal').value);
+    const protein = parseFloat(document.getElementById('cfProtein').value);
+    const weight = parseFloat(document.getElementById('cfWeight').value)||100;
+    const packagePrice = parseFloat(document.getElementById('cfPackagePrice').value)||0;
+    if(!name || isNaN(kcal) || isNaN(protein)){
+      showStatus('Bitte Name, Kcal und Protein angeben');
+      return;
+    }
+    const price100 = weight>0 ? (packagePrice*100/weight) : 0;
+    customFoods.push({
+      name,
+      kcal: +kcal.toFixed(2),
+      protein: +protein.toFixed(2),
+      price: +price100.toFixed(3)
+    });
+    await saveCustomFoods();
+    document.getElementById('cfName').value='';
+    document.getElementById('cfKcal').value='';
+    document.getElementById('cfProtein').value='';
+    document.getElementById('cfWeight').value='100';
+    document.getElementById('cfPackagePrice').value='';
+    document.getElementById('cfPreview').classList.remove('show');
+    renderFoodsTable(document.getElementById('foodsFilter').value);
+    showStatus('Lebensmittel gespeichert');
+  };
+
+  document.getElementById('weightDate').value = todayISO();
+  document.getElementById('weightDate').max = todayISO();
+  document.getElementById('addWeightBtn').onclick = async ()=>{
+    const date = document.getElementById('weightDate').value || todayISO();
+    const kg = parseFloat(document.getElementById('weightKg').value);
+    if(!kg || kg<=0){ showStatus('Bitte ein gültiges Gewicht angeben'); return; }
+    const existingIdx = weights.findIndex(w=>w.date===date);
+    if(existingIdx>=0) weights[existingIdx].kg = kg;
+    else weights.push({date, kg});
+    await saveWeights();
+    document.getElementById('weightKg').value = '';
+    renderWeightTab();
+    showStatus('Gewicht gespeichert');
+  };
+  document.querySelectorAll('.range-btn').forEach(btn=>{
+    btn.onclick = ()=>{
+      document.querySelectorAll('.range-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      weightRange = parseInt(btn.dataset.range);
+      renderWeightChart();
+    };
+  });
+
+  document.getElementById('foodsFilter').oninput = (ev)=>renderFoodsTable(ev.target.value);
+}
+init();
+</script>
+</body>
+</html>
