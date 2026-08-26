@@ -72,6 +72,21 @@ const PROJECTS = [
     download: "https://drive.google.com/file/d/10MJo5rbMsnzXOlfSber2KUUd-1RL6rCy/view?usp=drive_link",
   },
 
+  {
+    name: "Fitness Trainer",
+    status: "Aktiv",
+    beschreibung:
+      "Desktop-Trainingsapp für individuelle Workouts: Übungen frei anlegen " +
+      "(Wiederholungen oder Zeit-basiert), zu Trainings zusammenstellen und " +
+      "starten. Führt mit Ton- und Farbsignalen durch Aufwärmen, jede Übung " +
+      "und Pause, lässt geschaffte Wiederholungen eintragen und speichert " +
+      "den Trainingsverlauf lokal in einer SQLite-Datenbank an einem frei " +
+      "wählbaren Speicherort.",
+    stack: ["Python", "CustomTkinter", "SQLite", "PyInstaller"],
+    link: "",
+    download: "downloads/FitnessTrainer.exe",
+  },
+
   // Neues Programm hinzufügen? Einfach diesen Block kopieren
   // und mit deinen Daten füllen:
   //
