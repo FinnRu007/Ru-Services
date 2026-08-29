@@ -30,8 +30,9 @@ const ABOUT = {
     "Neben dem technischen Studium interessiere ich mich besonders für " +
       "Mathematik und Informatik sowie für wirtschaftliche Zusammenhänge. " +
       "Einen Ausgleich dazu finde ich im Sport, vor allem beim Laufen.",
-    "Ru-Services ist der Rahmen für meine Softwareprojekte — ein Ort, an " +
-      "dem Ingenieurs-Denken und Softwareentwicklung zusammenkommen.",
+    "Ru-Services ist keine Firma, sondern das Dach für meine privaten " +
+      "Softwareprojekte — Desktop-Programme, kleine Web-Tools und eine " +
+      "Chrome-Erweiterung. Diese Seite sammelt sie an einem Ort.",
   ],
 
   ausbildung: [

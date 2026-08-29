@@ -23,7 +23,7 @@
     const filterBar = document.getElementById("projectFilter");
 
     // Reihenfolge der Kategorien in der Filterleiste
-    const CATEGORY_ORDER = ["Exe-Programme", "Chrome-Erweiterungen", "HTML-Dateien"];
+    const CATEGORY_ORDER = ["Web-Projekte", "Desktop-Programme", "Chrome-Erweiterungen"];
     const catOf = (p) => p.kategorie || "Sonstige";
 
     if (countEl) {
@@ -36,9 +36,14 @@
         .map((s) => `<li>${escapeHTML(s)}</li>`)
         .join("");
       const linkParts = [];
+      if (p.website) {
+        linkParts.push(
+          `<a class="project-link" href="${escapeAttr(p.website)}" target="_blank" rel="noopener">Website öffnen →</a>`
+        );
+      }
       if (p.link) {
         linkParts.push(
-          `<a class="project-link" href="${escapeAttr(p.link)}" target="_blank" rel="noopener">Repository ansehen →</a>`
+          `<a class="project-link" href="${escapeAttr(p.link)}" target="_blank" rel="noopener">Code auf GitHub →</a>`
         );
       }
       if (p.download) {

@@ -1,31 +1,55 @@
 /* ============================================================
-   PROJEKTE / BESTEHENDE PROGRAMME
+   PROJEKTE
    ------------------------------------------------------------
-   Hier trägst du deine Programme ein. Jeder Block zwischen
-   { und } ist ein Programm. Du kannst Einträge kopieren,
-   einfügen, löschen oder anpassen.
+   Hier stehen die Projekte. Jeder Block zwischen { und } ist
+   ein Projekt. Einträge lassen sich kopieren, einfügen,
+   löschen oder anpassen.
 
    Felder:
-   - name         : Name des Programms
-   - status       : z.B. "Aktiv", "In Entwicklung", "Archiviert"
-   - kategorie     : "Exe-Programme" | "Chrome-Erweiterungen" | "HTML-Dateien"
+   - name         : Name des Projekts
+   - status       : "Aktiv" | "In Entwicklung" | "Archiviert"
+   - kategorie    : "Desktop-Programme" | "Chrome-Erweiterungen" | "Web-Projekte"
                     Danach kann auf der Startseite gefiltert werden.
                     Weglassen = erscheint unter "Sonstige".
    - beschreibung : Freitext, beliebig lang
    - stack        : Liste der verwendeten Technologien
-   - link         : Link zu GitHub o.ä. (optional, sonst "")
-   - download     : Pfad zu einer Datei im Repo, die direkt herunter-
-                    geladen werden kann, z.B. "downloads/mein-programm.zip"
-                    (optional, sonst weglassen oder "")
-   - hinweis      : Kurzer Hinweis, der als Info-Zeile auf der Karte
-                    erscheint, z.B. eine Installationsanleitung (optional)
+   - website      : Link zur Live-Seite (nur bei Web-Projekten), sonst weglassen
+   - link         : Link zum Quellcode (GitHub o.ä.), optional
+   - download     : Pfad zu einer Datei im Repo, z.B. "downloads/programm.exe"
+                    (nur bei Desktop-Programmen / Erweiterungen), optional
+   - hinweis      : Kurzer Hinweis als Info-Zeile auf der Karte, optional
    ============================================================ */
 
 const PROJECTS = [
   {
+    name: "Sudoku-Löser",
+    status: "Aktiv",
+    kategorie: "Web-Projekte",
+    beschreibung:
+      "Löst beliebige Sudokus per Knopfdruck und generiert auf Wunsch neue, " +
+      "eindeutig lösbare Sudokus in vier Schwierigkeitsstufen. Läuft komplett " +
+      "im Browser mit Backtracking-Suche und Live-Erkennung von Widersprüchen.",
+    stack: ["HTML", "CSS", "JavaScript", "Backtracking"],
+    website: "https://finnru007.github.io/Sudoku-Solver/",
+    link: "https://github.com/FinnRu007/Sudoku-Solver",
+  },
+  {
+    name: "Klimawissen-Test",
+    status: "Aktiv",
+    kategorie: "Web-Projekte",
+    beschreibung:
+      "Ein Quiz zum Klimawandel: Zahlen rund um Erde und Klima werden über " +
+      "Schieberegler geschätzt, die Bewertung läuft über eine Gauß-Kurve " +
+      "(genau richtig = 10 Punkte, je weiter weg, desto weniger). Fünf Kapitel " +
+      "mit Auswertung nach jedem Kapitel und einer Gesamtauswertung am Ende.",
+    stack: ["HTML", "CSS", "JavaScript"],
+    website: "https://finnru007.github.io/Klimawissen-Test/",
+    link: "https://github.com/FinnRu007/Klimawissen-Test",
+  },
+  {
     name: "Ru-Rechnungen",
     status: "Aktiv",
-    kategorie: "Exe-Programme",
+    kategorie: "Desktop-Programme",
     beschreibung:
       "Desktop-Anwendung zur Rechnungserstellung für landwirtschaftliche Betriebe. " +
       "Erstellt professionelle PDF-Rechnungen auf Knopfdruck, verwaltet Kunden- und " +
@@ -35,32 +59,9 @@ const PROJECTS = [
     link: "",
   },
   {
-    name: "Rechnungsersteller V2",
-    status: "Archiviert",
-    kategorie: "Exe-Programme",
-    beschreibung:
-      "Vorgänger-Version des Rechnungsprogramms. Erzeugt Rechnungen als sauber " +
-      "gesetzte LaTeX-PDFs über Jinja2-Vorlagen — für ein technisches, präzises " +
-      "Layout statt einer klassischen Office-Vorlage.",
-    stack: ["Python", "Tkinter", "Jinja2", "LaTeX"],
-    link: "",
-  },
-  {
-    name: "Sudoku-Löser",
+    name: "Pomodoro Timer",
     status: "Aktiv",
-    kategorie: "HTML-Dateien",
-    beschreibung:
-      "Löst beliebige Sudokus per Knopfdruck und kann zusätzlich neue, " +
-      "eindeutig lösbare Sudokus in vier Schwierigkeitsstufen generieren — " +
-      "läuft komplett im Browser, mit Backtracking-Suche und Live-Erkennung " +
-      "von Widersprüchen.",
-    stack: ["HTML", "CSS", "JavaScript", "Backtracking"],
-    link: "https://github.com/FinnRu007/Sudoku-Solver",
-  },
-  {
-    name: "Ru-Services Pomodoro Timer",
-    status: "Aktiv",
-    kategorie: "Exe-Programme",
+    kategorie: "Desktop-Programme",
     beschreibung:
       "Moderner Pomodoro-Timer mit dunklem Design: Fokuszeit, Pausenzeit " +
       "und ein individuelles Lernzeitziel lassen sich frei einstellen, " +
@@ -71,7 +72,7 @@ const PROJECTS = [
   {
     name: "Nährwert-Log",
     status: "Aktiv",
-    kategorie: "Exe-Programme",
+    kategorie: "Desktop-Programme",
     beschreibung:
       "Desktop-Anwendung zum Erfassen von Mahlzeiten, Kalorien, Protein und " +
       "Kosten: Lebensmittel mit Standardmenge oder Stück-Umrechnung (z. B. " +
@@ -79,13 +80,12 @@ const PROJECTS = [
       "Körpergewicht über die Zeit verfolgen — alle Daten liegen lokal in " +
       "einer JSON-Datei neben dem Programm, kein Account, keine Cloud.",
     stack: ["Python", "CustomTkinter", "PyInstaller"],
-    link: "https://github.com/FinnRu007/NaehrwertLog",
     download: "downloads/NaehrwertLog.exe",
   },
   {
     name: "Fitness Trainer",
     status: "Aktiv",
-    kategorie: "Exe-Programme",
+    kategorie: "Desktop-Programme",
     beschreibung:
       "Desktop-Trainingsapp für individuelle Workouts: Übungen frei anlegen " +
       "(Wiederholungen oder Zeit-basiert), zu Trainings zusammenstellen und " +
@@ -95,7 +95,7 @@ const PROJECTS = [
       "wählbaren Speicherort.",
     stack: ["Python", "CustomTkinter", "SQLite", "PyInstaller"],
     link: "https://github.com/FinnRu007/Fitnessx",
-    download: "",
+    download: "downloads/FitnessTrainer.exe",
   },
   {
     name: "YouTube Shorts deaktivieren",
@@ -121,17 +121,15 @@ const PROJECTS = [
       "Ordner wählen (der Ordner, in dem die Datei manifest.json direkt liegt).",
   },
 
-  // Neues Programm hinzufügen? Einfach diesen Block kopieren
-  // und mit deinen Daten füllen:
+  // Neues Projekt hinzufügen? Diesen Block kopieren und ausfüllen:
   //
   // {
-  //   name: "Programmname",
+  //   name: "Projektname",
   //   status: "Aktiv",
-  //   kategorie: "Exe-Programme",
+  //   kategorie: "Web-Projekte",
   //   beschreibung: "Beschreibung hier einfügen.",
   //   stack: ["Technologie 1", "Technologie 2"],
-  //   link: "https://…",
-  //   download: "downloads/dateiname.zip",
-  //   hinweis: "",
+  //   website: "https://…",
+  //   link: "https://github.com/…",
   // },
 ];

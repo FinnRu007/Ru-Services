@@ -1,7 +1,0 @@
-Lege hier deine Bilddatei ab, z. B. profil.jpg
-
-Dann in data/about.js bei "foto" den Dateinamen eintragen:
-  foto: "img/profil.jpg",
-
-Tipp: ein möglichst quadratisches Foto (z.B. 800x800 px) sieht am besten aus,
-da das Bild automatisch rund/quadratisch zugeschnitten wird.
