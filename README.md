@@ -34,41 +34,36 @@ Du musst **kein HTML anfassen**, um Texte zu ändern:
 
 Beide Dateien sind mit Kommentaren versehen und können mit jedem Texteditor
 (auch direkt auf GitHub im Browser) bearbeitet werden. Nach dem Speichern
-einfach die Seite neu laden bzw. bei Netlify neu deployen — es ist kein
-Rebuild nötig.
+committen und pushen — es ist kein Rebuild nötig.
 
 ## Struktur
 
 ```
-ru-services/
-├── index.html          Startseite (Hero, Software-Lösungen, Programme)
-├── about.html           Über den Entwickler
+Website/
+├── index.html           Startseite (Hero, Software-Lösungen, Programme)
+├── about.html            Über den Entwickler
 ├── styles.css            Gesamtes Design
-├── script.js              Baut die Seiteninhalte aus den data/-Dateien
+├── script.js             Baut die Seiteninhalte aus den data/-Dateien
 ├── data/
-│   ├── projects.js      ← hier Programme eintragen
-│   └── about.js           ← hier Infos über dich eintragen
+│   ├── projects.js       ← hier Programme eintragen
+│   └── about.js          ← hier Infos über dich eintragen
 ├── downloads/            ← herunterladbare Programme (Dateien)
+├── .nojekyll             schaltet die Jekyll-Verarbeitung ab
 └── README.md
 ```
 
-## Deployment auf Netlify
+## Deployment über GitHub Pages
 
-**Variante 1 — Drag & Drop (am schnellsten):**
-1. Auf [app.netlify.com](https://app.netlify.com) einloggen.
-2. "Add new site" → "Deploy manually".
-3. Den kompletten `ru-services`-Ordner (oder die ZIP-Datei entpackt) per
-   Drag & Drop in das Feld ziehen.
-4. Fertig — die Seite ist sofort live.
+Die Seite läuft über **GitHub Pages** und ist live unter
+<https://finnru007.github.io/Website/>.
 
-**Variante 2 — über GitHub (empfohlen für laufende Änderungen):**
-1. Ordnerinhalt in ein neues GitHub-Repository pushen.
-2. Bei Netlify: "Add new site" → "Import an existing project" → Repository auswählen.
-3. Build command: leer lassen. Publish directory: `.` (Root).
-4. Bei jeder Änderung an `data/projects.js` oder `data/about.js` einfach
-   committen und pushen — Netlify deployt automatisch neu.
+- Quelle: Branch `main`, Ordner `/` (Root) — eingestellt unter
+  *Settings → Pages* im Repository.
+- Bei jedem `git push` auf `main` wird die Seite automatisch neu
+  veröffentlicht (Build dauert ca. 30 Sekunden).
+- `.nojekyll` sorgt dafür, dass die Dateien 1:1 statisch ausgeliefert werden.
 
 ## Eigene Domain
 
-In Netlify unter "Domain settings" → "Add a domain" lässt sich später
-jederzeit eine eigene Domain (z. B. `ru-services.de`) verbinden.
+Unter *Settings → Pages → Custom domain* lässt sich später eine eigene Domain
+(z. B. `ru-services.de`) verbinden.
