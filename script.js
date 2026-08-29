@@ -20,50 +20,110 @@
   if (projectList) {
     const projects = typeof PROJECTS !== "undefined" ? PROJECTS : [];
     const countEl = document.getElementById("projectCount");
+    const filterBar = document.getElementById("projectFilter");
+
+    // Reihenfolge der Kategorien in der Filterleiste
+    const CATEGORY_ORDER = ["Exe-Programme", "Chrome-Erweiterungen", "HTML-Dateien"];
+    const catOf = (p) => p.kategorie || "Sonstige";
 
     if (countEl) {
       countEl.textContent = String(projects.length).padStart(2, "0") + " Einträge";
+    }
+
+    function cardHTML(p) {
+      const statusClass = "status-" + String(p.status || "").replace(/\s+/g, "-");
+      const stack = (p.stack || [])
+        .map((s) => `<li>${escapeHTML(s)}</li>`)
+        .join("");
+      const linkParts = [];
+      if (p.link) {
+        linkParts.push(
+          `<a class="project-link" href="${escapeAttr(p.link)}" target="_blank" rel="noopener">Repository ansehen →</a>`
+        );
+      }
+      if (p.download) {
+        linkParts.push(
+          `<a class="project-link" href="${escapeAttr(p.download)}" download>Programm herunterladen →</a>`
+        );
+      }
+      const link = linkParts.length
+        ? linkParts.join("")
+        : `<span class="project-link project-link-locked">Nicht frei zugänglich</span>`;
+      const cat = catOf(p);
+      const catPill = `<span class="cat-pill">${escapeHTML(cat)}</span>`;
+      const hinweis = p.hinweis
+        ? `<p class="project-hinweis">${escapeHTML(p.hinweis)}</p>`
+        : "";
+      return `
+        <article class="project-card">
+          <div class="project-head">
+            <span class="project-name">${escapeHTML(p.name || "")}</span>
+            <span class="status-pill ${statusClass}">${escapeHTML(p.status || "")}</span>
+            ${catPill}
+            ${link}
+          </div>
+          <div class="project-body">
+            <p>${escapeHTML(p.beschreibung || "")}</p>
+            <ul class="stack-list">${stack}</ul>
+            ${hinweis}
+          </div>
+        </article>
+      `;
+    }
+
+    function renderList(filter) {
+      const shown =
+        !filter || filter === "*"
+          ? projects
+          : projects.filter((p) => catOf(p) === filter);
+      if (!shown.length) {
+        projectList.innerHTML =
+          '<p class="empty-note">Keine Programme in dieser Kategorie.</p>';
+        return;
+      }
+      projectList.innerHTML = shown.map(cardHTML).join("");
     }
 
     if (!projects.length) {
       projectList.innerHTML =
         '<p class="empty-note">Noch keine Programme eingetragen. Ergänze sie in data/projects.js.</p>';
     } else {
-      projectList.innerHTML = projects
-        .map((p) => {
-          const statusClass = "status-" + String(p.status || "").replace(/\s+/g, "-");
-          const stack = (p.stack || [])
-            .map((s) => `<li>${escapeHTML(s)}</li>`)
+      // Vorhandene Kategorien in gewünschter Reihenfolge sammeln
+      const present = [];
+      projects.forEach((p) => {
+        const c = catOf(p);
+        if (!present.includes(c)) present.push(c);
+      });
+      present.sort((a, b) => {
+        const ia = CATEGORY_ORDER.indexOf(a);
+        const ib = CATEGORY_ORDER.indexOf(b);
+        return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+      });
+
+      if (filterBar && present.length > 1) {
+        const chip = (val, label, count) =>
+          `<button type="button" class="filter-chip" data-filter="${escapeAttr(val)}">` +
+          `${escapeHTML(label)}<span class="filter-count">${count}</span></button>`;
+        filterBar.innerHTML =
+          chip("*", "Alle", projects.length) +
+          present
+            .map((c) =>
+              chip(c, c, projects.filter((p) => catOf(p) === c).length)
+            )
             .join("");
-          const linkParts = [];
-          if (p.link) {
-            linkParts.push(
-              `<a class="project-link" href="${escapeAttr(p.link)}" target="_blank" rel="noopener">Repository ansehen →</a>`
-            );
-          }
-          if (p.download) {
-            linkParts.push(
-              `<a class="project-link" href="${escapeAttr(p.download)}" download>Programm herunterladen →</a>`
-            );
-          }
-          const link = linkParts.length
-            ? linkParts.join("")
-            : `<span class="project-link project-link-locked">Nicht frei zugänglich</span>`;
-          return `
-            <article class="project-card">
-              <div class="project-head">
-                <span class="project-name">${escapeHTML(p.name || "")}</span>
-                <span class="status-pill ${statusClass}">${escapeHTML(p.status || "")}</span>
-                ${link}
-              </div>
-              <div class="project-body">
-                <p>${escapeHTML(p.beschreibung || "")}</p>
-                <ul class="stack-list">${stack}</ul>
-              </div>
-            </article>
-          `;
-        })
-        .join("");
+
+        filterBar.addEventListener("click", (e) => {
+          const btn = e.target.closest(".filter-chip");
+          if (!btn) return;
+          filterBar
+            .querySelectorAll(".filter-chip")
+            .forEach((b) => b.classList.toggle("is-active", b === btn));
+          renderList(btn.dataset.filter);
+        });
+        filterBar.querySelector(".filter-chip").classList.add("is-active");
+      }
+
+      renderList("*");
     }
   }
 

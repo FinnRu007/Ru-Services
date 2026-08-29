@@ -8,18 +8,24 @@
    Felder:
    - name         : Name des Programms
    - status       : z.B. "Aktiv", "In Entwicklung", "Archiviert"
+   - kategorie     : "Exe-Programme" | "Chrome-Erweiterungen" | "HTML-Dateien"
+                    Danach kann auf der Startseite gefiltert werden.
+                    Weglassen = erscheint unter "Sonstige".
    - beschreibung : Freitext, beliebig lang
    - stack        : Liste der verwendeten Technologien
    - link         : Link zu GitHub o.ä. (optional, sonst "")
    - download     : Pfad zu einer Datei im Repo, die direkt herunter-
-                    geladen werden kann, z.B. "downloads/mein-programm.html"
+                    geladen werden kann, z.B. "downloads/mein-programm.zip"
                     (optional, sonst weglassen oder "")
+   - hinweis      : Kurzer Hinweis, der als Info-Zeile auf der Karte
+                    erscheint, z.B. eine Installationsanleitung (optional)
    ============================================================ */
 
 const PROJECTS = [
   {
     name: "Ru-Rechnungen",
     status: "Aktiv",
+    kategorie: "Exe-Programme",
     beschreibung:
       "Desktop-Anwendung zur Rechnungserstellung für landwirtschaftliche Betriebe. " +
       "Erstellt professionelle PDF-Rechnungen auf Knopfdruck, verwaltet Kunden- und " +
@@ -31,6 +37,7 @@ const PROJECTS = [
   {
     name: "Rechnungsersteller V2",
     status: "Archiviert",
+    kategorie: "Exe-Programme",
     beschreibung:
       "Vorgänger-Version des Rechnungsprogramms. Erzeugt Rechnungen als sauber " +
       "gesetzte LaTeX-PDFs über Jinja2-Vorlagen — für ein technisches, präzises " +
@@ -38,20 +45,22 @@ const PROJECTS = [
     stack: ["Python", "Tkinter", "Jinja2", "LaTeX"],
     link: "",
   },
-{
-  name: "Sudoku-Löser",
-  status: "Aktiv",
-  beschreibung:
-    "Löst beliebige Sudokus per Knopfdruck und kann zusätzlich neue, " +
-    "eindeutig lösbare Sudokus in vier Schwierigkeitsstufen generieren — " +
-    "läuft komplett im Browser, mit Backtracking-Suche und Live-Erkennung " +
-    "von Widersprüchen.",
-  stack: ["HTML", "CSS", "JavaScript", "Backtracking"],
-  link: "https://github.com/FinnRu007/Sudoku-Solver",
-},
+  {
+    name: "Sudoku-Löser",
+    status: "Aktiv",
+    kategorie: "HTML-Dateien",
+    beschreibung:
+      "Löst beliebige Sudokus per Knopfdruck und kann zusätzlich neue, " +
+      "eindeutig lösbare Sudokus in vier Schwierigkeitsstufen generieren — " +
+      "läuft komplett im Browser, mit Backtracking-Suche und Live-Erkennung " +
+      "von Widersprüchen.",
+    stack: ["HTML", "CSS", "JavaScript", "Backtracking"],
+    link: "https://github.com/FinnRu007/Sudoku-Solver",
+  },
   {
     name: "Ru-Services Pomodoro Timer",
     status: "Aktiv",
+    kategorie: "Exe-Programme",
     beschreibung:
       "Moderner Pomodoro-Timer mit dunklem Design: Fokuszeit, Pausenzeit " +
       "und ein individuelles Lernzeitziel lassen sich frei einstellen, " +
@@ -62,6 +71,7 @@ const PROJECTS = [
   {
     name: "Nährwert-Log",
     status: "Aktiv",
+    kategorie: "Exe-Programme",
     beschreibung:
       "Desktop-Anwendung zum Erfassen von Mahlzeiten, Kalorien, Protein und " +
       "Kosten: Lebensmittel mit Standardmenge oder Stück-Umrechnung (z. B. " +
@@ -72,10 +82,10 @@ const PROJECTS = [
     link: "https://github.com/FinnRu007/NaehrwertLog",
     download: "downloads/NaehrwertLog.exe",
   },
-
   {
     name: "Fitness Trainer",
     status: "Aktiv",
+    kategorie: "Exe-Programme",
     beschreibung:
       "Desktop-Trainingsapp für individuelle Workouts: Übungen frei anlegen " +
       "(Wiederholungen oder Zeit-basiert), zu Trainings zusammenstellen und " +
@@ -87,6 +97,25 @@ const PROJECTS = [
     link: "https://github.com/FinnRu007/Fitnessx",
     download: "",
   },
+  {
+    name: "YouTube Shorts deaktivieren",
+    status: "Aktiv",
+    kategorie: "Chrome-Erweiterungen",
+    beschreibung:
+      "Chrome-Erweiterung, die YouTube entrümpelt: blendet Shorts komplett aus " +
+      "(inklusive Weiterleitung von Shorts-Links auf den normalen Player), auf " +
+      "Wunsch auch YouTube Playables und die Umfrage-/Feedback-Einblendungen im " +
+      "Feed. Zusätzlich ein Website-Blocker für ablenkende Seiten (z. B. " +
+      "Instagram) mit 10-Minuten-Freischaltung und eine Funktion, die " +
+      "Cookie-Banner automatisch ablehnt. Alle Optionen einzeln an- und " +
+      "abschaltbar.",
+    stack: ["Chrome Extension", "Manifest V3", "JavaScript", "declarativeNetRequest"],
+    link: "https://github.com/FinnRu007/youtube-shorts-deaktivieren",
+    download: "downloads/youtube-shorts-deaktivieren.zip",
+    hinweis:
+      "Nach dem Download entpacken, dann chrome://extensions öffnen, " +
+      "Entwicklermodus aktivieren und „Entpackte Erweiterung laden“ wählen.",
+  },
 
   // Neues Programm hinzufügen? Einfach diesen Block kopieren
   // und mit deinen Daten füllen:
@@ -94,9 +123,11 @@ const PROJECTS = [
   // {
   //   name: "Programmname",
   //   status: "Aktiv",
+  //   kategorie: "Exe-Programme",
   //   beschreibung: "Beschreibung hier einfügen.",
   //   stack: ["Technologie 1", "Technologie 2"],
   //   link: "https://…",
-  //   download: "downloads/dateiname.html",
+  //   download: "downloads/dateiname.zip",
+  //   hinweis: "",
   // },
 ];

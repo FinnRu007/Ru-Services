@@ -7,13 +7,21 @@ Eine statische Website (HTML/CSS/JS, kein Build-Schritt nötig) für Netlify.
 Du musst **kein HTML anfassen**, um Texte zu ändern:
 
 - **Programme / Projekte** → `data/projects.js`
-  Jeder Eintrag ist ein Programm mit Name, Status, Beschreibung, Technologien und Link.
+  Jeder Eintrag ist ein Programm mit Name, Status, Kategorie, Beschreibung, Technologien und Link.
   Neuen Eintrag hinzufügen: Block kopieren, einfügen, Werte anpassen.
 
+- **Kategorie / Filter** → Feld `kategorie` pro Eintrag:
+  `"Exe-Programme"`, `"Chrome-Erweiterungen"` oder `"HTML-Dateien"`.
+  Auf der Startseite erscheint automatisch eine Filterleiste, sobald mehr als
+  eine Kategorie vorkommt. Ohne `kategorie` landet ein Eintrag unter „Sonstige“.
+
 - **Programm zum Download anbieten**:
-  1. Datei (z. B. eine eigenständige `.html`-App) in den Ordner `downloads/` legen.
-  2. In `data/projects.js` beim Eintrag `download: "downloads/dateiname.html"` setzen.
+  1. Datei (z. B. eine `.exe` oder eine `.zip`) in den Ordner `downloads/` legen.
+  2. In `data/projects.js` beim Eintrag `download: "downloads/dateiname.zip"` setzen.
   3. Es erscheint automatisch ein "Programm herunterladen →"-Button bei diesem Eintrag.
+
+- **Hinweis / Anleitung** → optionales Feld `hinweis` pro Eintrag: erscheint als
+  kleine Info-Zeile auf der Karte (z. B. eine kurze Installationsanleitung).
 
 - **Über den Entwickler** → `data/about.js`
   Name, Rolle, Bio-Absätze, Ausbildung, Interessen, Kontakt.

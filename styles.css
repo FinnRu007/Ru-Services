@@ -330,6 +330,49 @@ h2.section-title{
   color: var(--ink-soft);
 }
 
+/* ---------- category filter ---------- */
+.project-filter{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 4px 0 26px;
+}
+.filter-chip{
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 9px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.filter-chip:hover{ border-color: var(--ink-faint); color: var(--ink); }
+.filter-chip.is-active{
+  color: #fff;
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.filter-count{
+  font-size: 0.74rem;
+  font-weight: 700;
+  background: var(--bg-soft-2);
+  color: var(--ink-soft);
+  border-radius: 999px;
+  padding: 1px 7px;
+  min-width: 18px;
+  text-align: center;
+}
+.filter-chip.is-active .filter-count{
+  background: rgba(255,255,255,0.22);
+  color: #fff;
+}
+
 /* ---------- project / program cards ---------- */
 .project-list{
   display: grid;
@@ -370,6 +413,16 @@ h2.section-title{
 .status-In-Bearbeitung{ color: var(--amber); background: var(--amber-tint); }
 .status-Archiviert{ color: var(--ink-soft); background: var(--bg-soft-2); }
 
+.cat-pill{
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  width: fit-content;
+  background: var(--primary-tint);
+  color: var(--primary);
+}
+
 .project-link{
   font-size: 0.88rem;
   font-weight: 600;
@@ -386,6 +439,15 @@ h2.section-title{
 .project-body p{
   margin: 0 0 16px;
   color: var(--ink-soft);
+}
+.project-body p.project-hinweis{
+  margin: 14px 0 0;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  background: var(--bg-soft);
+  border-left: 3px solid var(--primary);
+  padding: 10px 14px;
+  border-radius: 8px;
 }
 .stack-list{
   list-style: none;
