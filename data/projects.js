@@ -113,8 +113,10 @@ const PROJECTS = [
     link: "https://github.com/FinnRu007/youtube-shorts-deaktivieren",
     download: "downloads/youtube-shorts-deaktivieren.zip",
     hinweis:
-      "Nach dem Download entpacken, dann chrome://extensions öffnen, " +
-      "Entwicklermodus aktivieren und „Entpackte Erweiterung laden“ wählen.",
+      "ZIP herunterladen und mit Rechtsklick → „Alle extrahieren“ entpacken. " +
+      "Dann chrome://extensions öffnen, oben rechts den Entwicklermodus " +
+      "aktivieren, „Entpackte Erweiterung laden“ klicken und den entpackten " +
+      "Ordner wählen (der Ordner, in dem die Datei manifest.json direkt liegt).",
   },
 
   // Neues Programm hinzufügen? Einfach diesen Block kopieren
