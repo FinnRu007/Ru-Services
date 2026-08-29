@@ -22,7 +22,7 @@
 
 const PROJECTS = [
   {
-    name: "Sudoku-Löser",
+    name: "Sudoku",
     status: "Aktiv",
     kategorie: "Web-Projekte",
     beschreibung:
@@ -34,7 +34,7 @@ const PROJECTS = [
     link: "https://github.com/FinnRu007/Ru-Sudoku",
   },
   {
-    name: "Klimawissen-Test",
+    name: "Klimaquiz",
     status: "Aktiv",
     kategorie: "Web-Projekte",
     beschreibung:
@@ -46,7 +46,7 @@ const PROJECTS = [
     link: "https://github.com/FinnRu007/Ru-Klimaquiz",
   },
   {
-    name: "Ru-Rechnungen",
+    name: "Rechnungen",
     status: "Aktiv",
     kategorie: "Desktop-Programme",
     beschreibung:
@@ -57,7 +57,7 @@ const PROJECTS = [
     link: "",
   },
   {
-    name: "Pomodoro Timer",
+    name: "Pomodoro",
     status: "Aktiv",
     kategorie: "Desktop-Programme",
     beschreibung:
@@ -67,7 +67,7 @@ const PROJECTS = [
     link: "https://github.com/FinnRu007/Ru-Pomodoro",
   },
   {
-    name: "Nährwert-Log",
+    name: "Naehrwert",
     status: "Aktiv",
     kategorie: "Desktop-Programme",
     beschreibung:
@@ -80,7 +80,7 @@ const PROJECTS = [
     download: "downloads/NaehrwertLog.exe",
   },
   {
-    name: "Fitness Trainer",
+    name: "Fitness",
     status: "Aktiv",
     kategorie: "Desktop-Programme",
     beschreibung:
@@ -93,7 +93,7 @@ const PROJECTS = [
     download: "downloads/FitnessTrainer.exe",
   },
   {
-    name: "YouTube Shorts deaktivieren",
+    name: "Focus",
     status: "Aktiv",
     kategorie: "Chrome-Erweiterungen",
     beschreibung:
