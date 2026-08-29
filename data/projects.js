@@ -65,6 +65,7 @@ const PROJECTS = [
       "frei einstellbar, Fortschritt als Kreis- und Balkenanzeige.",
     stack: ["Python"],
     link: "https://github.com/FinnRu007/Ru-Pomodoro",
+    download: "downloads/Pomodoro.exe",
   },
   {
     name: "Naehrwert",
