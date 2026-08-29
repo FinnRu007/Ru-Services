@@ -102,13 +102,15 @@ const PROJECTS = [
     status: "Aktiv",
     kategorie: "Chrome-Erweiterungen",
     beschreibung:
-      "Chrome-Erweiterung, die YouTube entrümpelt: blendet Shorts komplett aus " +
-      "(inklusive Weiterleitung von Shorts-Links auf den normalen Player), auf " +
-      "Wunsch auch YouTube Playables und die Umfrage-/Feedback-Einblendungen im " +
-      "Feed. Zusätzlich ein Website-Blocker für ablenkende Seiten (z. B. " +
-      "Instagram) mit 10-Minuten-Freischaltung und eine Funktion, die " +
-      "Cookie-Banner automatisch ablehnt. Alle Optionen einzeln an- und " +
-      "abschaltbar.",
+      "Chrome-Erweiterung, die YouTube entrümpelt und fokussierter macht: " +
+      "blendet Shorts komplett aus (inklusive Weiterleitung von Shorts-Links " +
+      "auf den normalen Player), auf Wunsch auch Playables und die " +
+      "Umfrage-Einblendungen. Zeigt die Dislike-Zahl wieder an, macht " +
+      "automatische Titel-/Audio-Übersetzung rückgängig, unterdrückt " +
+      "automatische Untertitel und legt eine feste Startlautstärke fest. " +
+      "Dazu ein Website-Blocker für ablenkende Seiten (z. B. Instagram) mit " +
+      "10-Minuten-Freischaltung und automatisches Ablehnen von Cookie-Bannern. " +
+      "Alle Optionen einzeln an- und abschaltbar.",
     stack: ["Chrome Extension", "Manifest V3", "JavaScript", "declarativeNetRequest"],
     link: "https://github.com/FinnRu007/youtube-shorts-deaktivieren",
     download: "downloads/youtube-shorts-deaktivieren.zip",
