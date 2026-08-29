@@ -60,16 +60,17 @@ const PROJECTS = [
     link: "https://github.com/FinnRu007/Ru-Pomodoro",
   },
   {
-    name: "Ernährungsplaner (Nährwert-Log)",
+    name: "Nährwert-Log",
     status: "Aktiv",
     beschreibung:
-      "Persönlicher Ernährungs-Tracker als eigenständige Web-App: erfasst " +
-      "Mahlzeiten und Kalorien pro Tag, verfolgt das Körpergewicht über " +
-      "die Zeit und stellt beides übersichtlich in Tages- und Verlaufs-" +
-      "Ansichten dar — läuft komplett offline im Browser, ohne Installation.",
-    stack: ["HTML", "CSS", "JavaScript"],
-    link: "",
-    download: "https://drive.google.com/file/d/10MJo5rbMsnzXOlfSber2KUUd-1RL6rCy/view?usp=drive_link",
+      "Desktop-Anwendung zum Erfassen von Mahlzeiten, Kalorien, Protein und " +
+      "Kosten: Lebensmittel mit Standardmenge oder Stück-Umrechnung (z. B. " +
+      "Eier) eintragen, feste Mahlzeiten einmal anlegen und wiederverwenden, " +
+      "Körpergewicht über die Zeit verfolgen — alle Daten liegen lokal in " +
+      "einer JSON-Datei neben dem Programm, kein Account, keine Cloud.",
+    stack: ["Python", "CustomTkinter", "PyInstaller"],
+    link: "https://github.com/FinnRu007/NaehrwertLog",
+    download: "downloads/NaehrwertLog.exe",
   },
 
   {
@@ -83,8 +84,8 @@ const PROJECTS = [
       "den Trainingsverlauf lokal in einer SQLite-Datenbank an einem frei " +
       "wählbaren Speicherort.",
     stack: ["Python", "CustomTkinter", "SQLite", "PyInstaller"],
-    link: "",
-    download: "downloads/FitnessTrainer.exe",
+    link: "https://github.com/FinnRu007/Fitnessx",
+    download: "",
   },
 
   // Neues Programm hinzufügen? Einfach diesen Block kopieren
