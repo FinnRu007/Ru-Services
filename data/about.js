@@ -2,7 +2,7 @@
    ÜBER DEN ENTWICKLER
    ------------------------------------------------------------
    Trage hier deine Infos ein. "bio" ist eine Liste von
-   Absätzen — jeder Eintrag in der Liste wird ein eigener
+   Absätzen. Jeder Eintrag in der Liste wird ein eigener
    Absatz auf der Seite.
    ============================================================ */
 
@@ -30,9 +30,8 @@ const ABOUT = {
     "Neben dem technischen Studium interessiere ich mich besonders für " +
       "Mathematik und Informatik sowie für wirtschaftliche Zusammenhänge. " +
       "Einen Ausgleich dazu finde ich im Sport, vor allem beim Laufen.",
-    "Ru-Services ist keine Firma, sondern das Dach für meine privaten " +
-      "Softwareprojekte — Desktop-Programme, kleine Web-Tools und eine " +
-      "Chrome-Erweiterung. Diese Seite sammelt sie an einem Ort.",
+    "Diese Seite sammelt meine privaten Softwareprojekte an einem Ort: " +
+      "ein paar Desktop-Programme, kleine Web-Tools und eine Chrome-Erweiterung.",
   ],
 
   ausbildung: [

@@ -1,10 +1,10 @@
-# Ru-Services — Website
+# Website: Projekte von Finn Rummel
 
-Statische Website (HTML/CSS/JS, kein Build-Schritt) — eine Sammlung der
+Statische Website (HTML/CSS/JS, kein Build-Schritt), eine Sammlung der
 privaten Softwareprojekte von Finn Rummel. Läuft über GitHub Pages.
 
 Design nach dem gemeinsamen Regelwerk in
-[`../design/DESIGN.md`](https://github.com/FinnRu007/design).
+[`../Ru-Design/DESIGN.md`](https://github.com/FinnRu007/Ru-Design).
 
 ## Inhalte bearbeiten
 
@@ -51,7 +51,7 @@ und pushen — kein Rebuild nötig.
 Website/
 ├── index.html           Startseite (Hero, Arten, Projektliste)
 ├── about.html            Über mich
-├── styles.css            Gesamtes Design (Tokens aus dem Ru-Services-Designsystem)
+├── styles.css            Gesamtes Design (Tokens aus dem gemeinsamen Regelwerk Ru-Design)
 ├── script.js             Baut die Seiteninhalte aus den data/-Dateien
 ├── data/
 │   ├── projects.js       ← hier Projekte eintragen
@@ -64,7 +64,7 @@ Website/
 
 ## Deployment über GitHub Pages
 
-Live unter <https://finnru007.github.io/Website/>.
+Live unter <https://finnru007.github.io/Ru-Website/>.
 
 - Quelle: Branch `main`, Ordner `/` (Root) — *Settings → Pages* im Repository.
 - Bei jedem `git push` auf `main` wird die Seite automatisch neu

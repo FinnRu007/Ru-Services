@@ -1,8 +1,8 @@
 /* ============================================================
-   RU-SERVICES — Design system
+   WEBSITE · Design system
    Klare, moderne Ästhetik: viel Weißraum, ruhige Farben,
    ein Akzentton, weiche Schatten statt technischer Linien.
-   Regelwerk: ../design/DESIGN.md
+   Regelwerk: ../Ru-Design/DESIGN.md
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap');
@@ -281,51 +281,6 @@ h2.section-title{
 }
 .section-head .eyebrow{ margin-bottom: 10px; }
 
-.lede{
-  max-width: 60ch;
-  font-size: 1.06rem;
-  color: var(--ink-soft);
-  margin: 0 0 8px;
-}
-
-/* ---------- feature / capability grid ---------- */
-.cap-grid{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 36px;
-}
-.cap{
-  background: var(--bg);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 30px 26px;
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
-}
-.cap:hover{ box-shadow: var(--shadow-md); transform: translateY(-2px); }
-.cap-icon{
-  width: 44px; height: 44px;
-  border-radius: 12px;
-  background: var(--primary-tint);
-  color: var(--primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 18px;
-}
-.cap-icon svg{ width: 22px; height: 22px; }
-.cap h3{
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.1rem;
-  margin: 0 0 8px;
-  color: var(--ink);
-}
-.cap p{
-  margin: 0;
-  font-size: 0.94rem;
-  color: var(--ink-soft);
-}
 
 /* ---------- category filter ---------- */
 .project-filter{
@@ -624,7 +579,6 @@ footer{
 
 /* ---------- responsive ---------- */
 @media (max-width: 860px){
-  .cap-grid{ grid-template-columns: 1fr; }
   .project-card{ grid-template-columns: 1fr; }
   .about-grid{ grid-template-columns: 1fr; }
   .id-card{ position: static; }
@@ -674,7 +628,7 @@ footer{
 }
 
 /* ============================================================
-   Dark-Variante — Anhang in ../design/DESIGN.md
+   Dark-Variante · Anhang in ../Ru-Design/DESIGN.md
    Nur die Flächen-/Text-/Akzentrollen tauschen, sonst nichts.
    Alle Komponenten nutzen diese Tokens und ziehen automatisch mit.
    ============================================================ */

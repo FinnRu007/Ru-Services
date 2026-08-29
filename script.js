@@ -1,8 +1,8 @@
 /* ============================================================
-   RU-SERVICES — Rendering-Logik
+   WEBSITE · Rendering-Logik
    Liest die Daten aus data/projects.js bzw. data/about.js
    und baut daraus die Seiteninhalte. Muss normalerweise
-   NICHT angepasst werden — Inhalte gehören in die data/-Dateien.
+   NICHT angepasst werden, Inhalte gehören in die data/-Dateien.
    ============================================================ */
 
 (function () {
