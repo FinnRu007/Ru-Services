@@ -148,11 +148,12 @@ const PROJECTS = [
     link: "https://github.com/FinnRu007/Ru-Curve",
     download: "downloads/Ru-Curve.zip",
     hinweis:
-      "ZIP herunterladen und entpacken, dann Ru-Curve.exe starten. Windows " +
-      "Defender meldet für die EXE ggf. einen Fehlalarm (typisch für mit " +
-      "PyInstaller gepackte Programme) – die Datei ist ungefährlich, der " +
-      "Quellcode liegt offen auf GitHub. Für das Spiel über LAN beim ersten " +
-      "„Hosten“ die Windows-Firewall zulassen.",
+      "ZIP herunterladen und entpacken, dann im Ordner Ru-Curve die Datei " +
+      "Ru-Curve.exe starten. Meldet Windows Defender einen Fehlalarm: das ist " +
+      "bei mit PyInstaller gepackten Programmen bekannt, die Dateien sind " +
+      "ungefährlich (Quellcode offen auf GitHub) – ggf. in Windows-Sicherheit " +
+      "unter „Schutzverlauf“ wiederherstellen und für den Ordner eine Ausnahme " +
+      "hinzufügen. Für LAN beim ersten „Hosten“ die Windows-Firewall zulassen.",
   },
 
   // Neues Projekt hinzufügen? Diesen Block kopieren und ausfüllen:
