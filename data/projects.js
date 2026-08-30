@@ -94,6 +94,23 @@ const PROJECTS = [
     download: "downloads/FitnessTrainer.exe",
   },
   {
+    name: "Online",
+    status: "Aktiv",
+    kategorie: "Desktop-Programme",
+    beschreibung:
+      "Windows-Programm, das den Rechner als aktiv hält, damit Microsoft Teams " +
+      "nicht von selbst auf „Abwesend“ springt. Sendet in einstellbarem Takt " +
+      "(Standard alle 4 Minuten) ein unsichtbares Tastensignal (F15) und sperrt " +
+      "auf Wunsch Energiesparmodus und Bildschirmschoner. Start und Stopp per Klick.",
+    stack: ["Python", "CustomTkinter", "PyInstaller"],
+    link: "https://github.com/FinnRu007/Ru-Online",
+    download: "downloads/Ru-Online.exe",
+    hinweis:
+      "Beim ersten Start zeigt Windows SmartScreen ggf. eine Warnung " +
+      "(unsignierte EXE): „Weitere Informationen“ → „Trotzdem ausführen“. " +
+      "Bei gesperrtem Bildschirm (Win+L) wirkt das Signal nicht.",
+  },
+  {
     name: "Focus",
     status: "Aktiv",
     kategorie: "Chrome-Erweiterungen",
