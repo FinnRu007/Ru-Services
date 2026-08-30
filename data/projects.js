@@ -141,9 +141,11 @@ const PROJECTS = [
       "eine Linie berührt, ist raus; nach jeder Runde gibt es platzabhängige " +
       "Punkte. Spielbar zusammen an einem PC (geteilte Tastatur) oder über LAN " +
       "(ein Rechner hostet, die anderen treten bei), mit beliebig vielen " +
-      "Spielern in eigenen Farben, frei belegbaren Tasten, Powerups und einer " +
-      "Einstellungsseite für alle Spielparameter (Tempo, Lenkradius, " +
-      "Linienbreite, Lücken, Powerup-Dauer …).",
+      "Spielern in eigenen Farben und frei belegbaren Tasten. Dazu 14 Powerups " +
+      "auf der dritten Taste – von Speed-Schub, Schutzschild und Geist bis " +
+      "Nebel, Radiergummi und Farben umkehren – sowie KI-Bots in einstellbarer " +
+      "Stärke. Alle Spielparameter lassen sich einzeln justieren (Tempo, " +
+      "Lenkradius, Linienbreite, Lücken, jedes Powerup für sich).",
     stack: ["Python", "pygame", "NumPy", "Sockets (LAN)", "PyInstaller"],
     link: "https://github.com/FinnRu007/Ru-Curve",
     download: "downloads/Ru-Curve.zip",
