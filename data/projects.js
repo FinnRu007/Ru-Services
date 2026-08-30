@@ -130,6 +130,27 @@ const PROJECTS = [
       "aktivieren, „Entpackte Erweiterung laden“ klicken und den entpackten " +
       "Ordner wählen (der Ordner, in dem die Datei manifest.json direkt liegt).",
   },
+  {
+    name: "Curve",
+    status: "Aktiv",
+    kategorie: "Desktop-Programme",
+    beschreibung:
+      "Kurvenspiel im Stil von „Achtung die Kurve“: Jeder steuert einen Punkt, " +
+      "der eine Linie hinter sich herzieht, mit zwei benachbarten Tasten nach " +
+      "links und rechts – und ab und zu eine Lücke lässt. Wer den Rand oder " +
+      "eine Linie berührt, ist raus; nach jeder Runde gibt es platzabhängige " +
+      "Punkte. Spielbar zusammen an einem PC (geteilte Tastatur) oder über LAN " +
+      "(ein Rechner hostet, die anderen treten bei), mit beliebig vielen " +
+      "Spielern in eigenen Farben, frei belegbaren Tasten, Powerups und einer " +
+      "Einstellungsseite für alle Spielparameter (Tempo, Lenkradius, " +
+      "Linienbreite, Lücken, Powerup-Dauer …).",
+    stack: ["Python", "pygame", "NumPy", "Sockets (LAN)", "PyInstaller"],
+    link: "https://github.com/FinnRu007/Ru-Curve",
+    download: "downloads/Ru-Curve.exe",
+    hinweis:
+      "Für das Spiel über LAN muss beim ersten „Hosten“ die Windows-Firewall " +
+      "den Zugriff erlauben.",
+  },
 
   // Neues Projekt hinzufügen? Diesen Block kopieren und ausfüllen:
   //
