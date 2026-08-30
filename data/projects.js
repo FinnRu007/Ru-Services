@@ -95,7 +95,7 @@ const PROJECTS = [
   },
   {
     name: "Online",
-    status: "Aktiv",
+    status: "In Entwicklung",
     kategorie: "Desktop-Programme",
     beschreibung:
       "Windows-Programm, das den Rechner als aktiv hält, damit Microsoft Teams " +
@@ -103,12 +103,10 @@ const PROJECTS = [
       "(Standard alle 4 Minuten) ein unsichtbares Tastensignal (F15) und sperrt " +
       "auf Wunsch Energiesparmodus und Bildschirmschoner. Start und Stopp per Klick.",
     stack: ["Python", "CustomTkinter", "PyInstaller"],
-    link: "https://github.com/FinnRu007/Ru-Online",
-    download: "downloads/Ru-Online.exe",
     hinweis:
-      "Beim ersten Start zeigt Windows SmartScreen ggf. eine Warnung " +
-      "(unsignierte EXE): „Weitere Informationen“ → „Trotzdem ausführen“. " +
-      "Bei gesperrtem Bildschirm (Win+L) wirkt das Signal nicht.",
+      "Download derzeit nicht verfügbar – Windows Defender meldet für die EXE " +
+      "einen Fehlalarm (Wacatac.B!ml, typisch für mit PyInstaller gebaute " +
+      "Programme). Wird überarbeitet.",
   },
   {
     name: "Focus",
