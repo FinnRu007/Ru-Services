@@ -146,10 +146,13 @@ const PROJECTS = [
       "Linienbreite, Lücken, Powerup-Dauer …).",
     stack: ["Python", "pygame", "NumPy", "Sockets (LAN)", "PyInstaller"],
     link: "https://github.com/FinnRu007/Ru-Curve",
-    download: "downloads/Ru-Curve.exe",
+    download: "downloads/Ru-Curve.zip",
     hinweis:
-      "Für das Spiel über LAN muss beim ersten „Hosten“ die Windows-Firewall " +
-      "den Zugriff erlauben.",
+      "ZIP herunterladen und entpacken, dann Ru-Curve.exe starten. Windows " +
+      "Defender meldet für die EXE ggf. einen Fehlalarm (typisch für mit " +
+      "PyInstaller gepackte Programme) – die Datei ist ungefährlich, der " +
+      "Quellcode liegt offen auf GitHub. Für das Spiel über LAN beim ersten " +
+      "„Hosten“ die Windows-Firewall zulassen.",
   },
 
   // Neues Projekt hinzufügen? Diesen Block kopieren und ausfüllen:
