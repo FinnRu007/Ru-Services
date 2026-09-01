@@ -154,7 +154,8 @@ const PROJECTS = [
       "bei mit PyInstaller gepackten Programmen bekannt, die Dateien sind " +
       "ungefährlich (Quellcode offen auf GitHub) – ggf. in Windows-Sicherheit " +
       "unter „Schutzverlauf“ wiederherstellen und für den Ordner eine Ausnahme " +
-      "hinzufügen. Für LAN beim ersten „Hosten“ die Windows-Firewall zulassen.",
+      "hinzufügen. Für LAN beim ersten „Hosten“ die Windows-Firewall zulassen – " +
+      "notfalls tools/firewall_freigeben.bat als Administrator ausführen.",
   },
 
   // Neues Projekt hinzufügen? Diesen Block kopieren und ausfüllen:
