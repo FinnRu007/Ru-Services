@@ -135,17 +135,16 @@ const PROJECTS = [
     status: "Aktiv",
     kategorie: "Desktop-Programme",
     beschreibung:
-      "Kurvenspiel im Stil von „Achtung die Kurve“: Jeder steuert einen Punkt, " +
-      "der eine Linie hinter sich herzieht, mit zwei benachbarten Tasten nach " +
-      "links und rechts – und ab und zu eine Lücke lässt. Wer den Rand oder " +
-      "eine Linie berührt, ist raus; nach jeder Runde gibt es platzabhängige " +
-      "Punkte. Spielbar zusammen an einem PC (geteilte Tastatur) oder über LAN " +
-      "(ein Rechner hostet, die anderen treten bei), mit beliebig vielen " +
-      "Spielern in eigenen Farben und frei belegbaren Tasten. Dazu 14 Powerups " +
-      "auf der dritten Taste – von Speed-Schub, Schutzschild und Geist bis " +
-      "Nebel, Radiergummi und Farben umkehren – sowie KI-Bots in einstellbarer " +
-      "Stärke. Alle Spielparameter lassen sich einzeln justieren (Tempo, " +
-      "Lenkradius, Linienbreite, Lücken, jedes Powerup für sich).",
+      "Partyspiel-Turnier für viele Leute an einem PC oder über LAN: elf kurze " +
+      "Minispiele laufen hintereinander ab – Reaktion, Tastenfolge merken, " +
+      "Kopfrechnen, Flächeninhalt, Schätzen, Ausreißer finden, Hämmern, " +
+      "Zeiger stoppen, Zeitgefühl, Zielen mit der Maus und „Achtung die Kurve“. " +
+      "Nach jedem Spiel gibt es Punkte nach Platzierung, bei Gleichstand " +
+      "entscheidet die Zeit; eine Rangliste zeigt jederzeit, wer vorn liegt. " +
+      "Der Clou: jeder Spieler hat nur drei Tasten (links, Aktion, rechts) – so " +
+      "passen beliebig viele an eine Tastatur, und dasselbe funktioniert übers " +
+      "Netzwerk. „Achtung die Kurve“ lässt sich auch weiterhin einzeln spielen, " +
+      "mit 14 Powerups, KI-Bots und frei justierbaren Spielparametern.",
     stack: ["Python", "pygame", "NumPy", "Sockets (LAN)", "PyInstaller"],
     link: "https://github.com/FinnRu007/Ru-Curve",
     download: "downloads/Ru-Curve.zip",
