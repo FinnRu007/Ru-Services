@@ -135,16 +135,20 @@ const PROJECTS = [
     status: "Aktiv",
     kategorie: "Desktop-Programme",
     beschreibung:
-      "Partyspiel-Turnier für viele Leute an einem PC oder über LAN: elf kurze " +
-      "Minispiele laufen hintereinander ab – Reaktion, Tastenfolge merken, " +
+      "Partyspiel-Turnier für viele Leute an einem PC, über LAN oder übers " +
+      "Internet: elf kurze Minispiele – Reaktion, Tastenfolge merken, " +
       "Kopfrechnen, Flächeninhalt, Schätzen, Ausreißer finden, Hämmern, " +
-      "Zeiger stoppen, Zeitgefühl, Zielen mit der Maus und „Achtung die Kurve“. " +
-      "Nach jedem Spiel gibt es Punkte nach Platzierung, bei Gleichstand " +
-      "entscheidet die Zeit; eine Rangliste zeigt jederzeit, wer vorn liegt. " +
-      "Der Clou: jeder Spieler hat nur drei Tasten (links, Aktion, rechts) – so " +
-      "passen beliebig viele an eine Tastatur, und dasselbe funktioniert übers " +
-      "Netzwerk. „Achtung die Kurve“ lässt sich auch weiterhin einzeln spielen, " +
-      "mit 14 Powerups, KI-Bots und frei justierbaren Spielparametern.",
+      "Zeiger stoppen, Zeitgefühl, das Ru-Rennen und „Achtung die Kurve“. " +
+      "Alle spielen gleichzeitig gegeneinander, und Tempo entscheidet: bei den " +
+      "Quizspielen bringt eine schnelle Antwort deutlich mehr Punkte als eine " +
+      "späte. Eine Rangliste zeigt jederzeit, wer gerade vorn liegt. Jedes " +
+      "Minispiel lässt sich auch einzeln starten. Der Clou: jeder Spieler hat " +
+      "nur drei Tasten (links, Aktion, rechts) – so passen beliebig viele an " +
+      "eine Tastatur, und dasselbe funktioniert übers Netzwerk. Beim Hosten " +
+      "öffnet das Spiel den Port per UPnP selbst und zeigt die Adresse an, " +
+      "unter der Freunde von außerhalb beitreten können. „Achtung die Kurve“ " +
+      "gibt es weiterhin einzeln, mit 14 Powerups, KI-Bots und frei " +
+      "justierbaren Spielparametern.",
     stack: ["Python", "pygame", "NumPy", "Sockets (LAN)", "PyInstaller"],
     link: "https://github.com/FinnRu007/Ru-Curve",
     download: "downloads/Ru-Curve.zip",
@@ -155,7 +159,10 @@ const PROJECTS = [
       "ungefährlich (Quellcode offen auf GitHub) – ggf. in Windows-Sicherheit " +
       "unter „Schutzverlauf“ wiederherstellen und für den Ordner eine Ausnahme " +
       "hinzufügen. Für LAN beim ersten „Hosten“ die Windows-Firewall zulassen – " +
-      "notfalls tools/firewall_freigeben.bat als Administrator ausführen.",
+      "notfalls tools/firewall_freigeben.bat als Administrator ausführen. Zum " +
+      "Spielen übers Internet zeigt die Lobby die öffentliche Adresse an; " +
+      "klappt die automatische Portfreigabe nicht, im Router den Port 51738 " +
+      "(TCP) auf den Host-PC weiterleiten.",
   },
 
   // Neues Projekt hinzufügen? Diesen Block kopieren und ausfüllen:
