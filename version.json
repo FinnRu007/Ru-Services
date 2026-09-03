@@ -1,5 +1,5 @@
 {
-  "version": "0.3.0",
-  "notes": "Ru-Rennen als neues Minispiel, Tempo entscheidet bei den Quizspielen, einzelne Spiele startbar, Spielen uebers Internet",
+  "version": "0.4.0",
+  "notes": "Abkuerzen im Rennen gesperrt, Aufgaben passen sich der Trefferquote an, Kopfrechnen schwerer, Schaetzen leichter, Hover-Markierung ueberall",
   "page": "https://finnru007.github.io/Ru-Services/"
 }

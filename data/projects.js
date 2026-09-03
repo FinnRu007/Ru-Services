@@ -141,7 +141,9 @@ const PROJECTS = [
       "Zeiger stoppen, Zeitgefühl, das Ru-Rennen und „Achtung die Kurve“. " +
       "Alle spielen gleichzeitig gegeneinander, und Tempo entscheidet: bei den " +
       "Quizspielen bringt eine schnelle Antwort deutlich mehr Punkte als eine " +
-      "späte. Eine Rangliste zeigt jederzeit, wer gerade vorn liegt. Jedes " +
+      "späte. Die Aufgaben passen sich dabei an: lief die letzte Runde gut, " +
+      "wird die nächste schwerer – und alle bekommen immer dieselbe Aufgabe. " +
+      "Eine Rangliste zeigt jederzeit, wer gerade vorn liegt. Jedes " +
       "Minispiel lässt sich auch einzeln starten. Der Clou: jeder Spieler hat " +
       "nur drei Tasten (links, Aktion, rechts) – so passen beliebig viele an " +
       "eine Tastatur, und dasselbe funktioniert übers Netzwerk. Beim Hosten " +
