@@ -1,5 +1,5 @@
 {
-  "version": "0.5.0",
-  "notes": "Drei neue Gegeneinander-Spiele: Ru-Sumo, Ru-Jagd, Ru-Ernte. Zwei Einzelspiele entfernt. Klarere Beschriftung fuer LAN und Online.",
+  "version": "0.5.1",
+  "notes": "Punktevergabe: kein Platz bekommt mehr so viele Punkte wie der davor. Ru-Jagd hat jetzt mehrere Faenger, damit bei vielen Spielern nicht die Haelfte den ersten Platz teilt.",
   "page": "https://finnru007.github.io/Ru-Services/"
 }
