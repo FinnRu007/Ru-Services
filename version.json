@@ -1,5 +1,5 @@
 {
-  "version": "0.6.0",
-  "notes": "Alle Sounds deutlich ruhiger. Ausfuehrliche Erklaerung vor jedem Spiel. Adresse laesst sich kopieren (Strg+C), Textfelder mit Markieren und Einfuegen. Kurve schneller, Rennen 4 Runden. Mehrere Fehler behoben: andere Karte beim Mitspieler, gleiche Punkte fuer Platz 1 und 2, beim Schaetzen war immer die mittlere Zahl richtig.",
+  "version": "0.7.0",
+  "notes": "Neues Spiel Ru-Klecks (wie agar.io). Gaeste koennen ihren Namen aendern. Achtung die Kurve deutlich schneller, bei Ru-Ernte kostet ein Treffer weniger. Beim Farben-Erkennen trennen die Linien jetzt eindeutig. Ergebnis zeigt bei Merken die gebrauchte Zeit mit.",
   "page": "https://finnru007.github.io/Ru-Services/"
 }
