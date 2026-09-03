@@ -1,5 +1,5 @@
 {
-  "version": "0.5.1",
-  "notes": "Punktevergabe: kein Platz bekommt mehr so viele Punkte wie der davor. Ru-Jagd hat jetzt mehrere Faenger, damit bei vielen Spielern nicht die Haelfte den ersten Platz teilt.",
+  "version": "0.6.0",
+  "notes": "Alle Sounds deutlich ruhiger. Ausfuehrliche Erklaerung vor jedem Spiel. Adresse laesst sich kopieren (Strg+C), Textfelder mit Markieren und Einfuegen. Kurve schneller, Rennen 4 Runden. Mehrere Fehler behoben: andere Karte beim Mitspieler, gleiche Punkte fuer Platz 1 und 2, beim Schaetzen war immer die mittlere Zahl richtig.",
   "page": "https://finnru007.github.io/Ru-Services/"
 }
