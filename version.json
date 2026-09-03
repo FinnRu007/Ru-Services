@@ -1,5 +1,5 @@
 {
-  "version": "0.7.0",
-  "notes": "Neues Spiel Ru-Klecks (wie agar.io). Gaeste koennen ihren Namen aendern. Achtung die Kurve deutlich schneller, bei Ru-Ernte kostet ein Treffer weniger. Beim Farben-Erkennen trennen die Linien jetzt eindeutig. Ergebnis zeigt bei Merken die gebrauchte Zeit mit.",
+  "version": "0.7.1",
+  "notes": "Wichtig: 0.7.0 wurde von Windows Defender faelschlich als Virus geloescht. Ursache war der Zugriff auf die Zwischenablage ueber die Windows-API - genau das Muster, an dem Defender Schadsoftware erkennt. Das Kopieren laeuft jetzt nur noch ueber SDL, die Datei ist geprueft sauber.",
   "page": "https://finnru007.github.io/Ru-Services/"
 }
