@@ -1,5 +1,5 @@
 {
-  "version": "0.4.0",
-  "notes": "Abkuerzen im Rennen gesperrt, Aufgaben passen sich der Trefferquote an, Kopfrechnen schwerer, Schaetzen leichter, Hover-Markierung ueberall",
+  "version": "0.5.0",
+  "notes": "Drei neue Gegeneinander-Spiele: Ru-Sumo, Ru-Jagd, Ru-Ernte. Zwei Einzelspiele entfernt. Klarere Beschriftung fuer LAN und Online.",
   "page": "https://finnru007.github.io/Ru-Services/"
 }

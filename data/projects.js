@@ -136,9 +136,12 @@ const PROJECTS = [
     kategorie: "Desktop-Programme",
     beschreibung:
       "Partyspiel-Turnier für viele Leute an einem PC, über LAN oder übers " +
-      "Internet: elf kurze Minispiele – Reaktion, Tastenfolge merken, " +
-      "Kopfrechnen, Flächeninhalt, Schätzen, Ausreißer finden, Hämmern, " +
-      "Zeiger stoppen, Zeitgefühl, das Ru-Rennen und „Achtung die Kurve“. " +
+      "Internet: zwölf kurze Minispiele. Fünf davon sind reine " +
+      "Gegeneinander-Spiele in einer Arena – Ru-Sumo (die anderen aus dem " +
+      "schrumpfenden Ring schubsen), Ru-Jagd (Fangen, wer vorn liegt wird " +
+      "gejagt), Ru-Ernte (Kristalle sammeln und dem Führenden abnehmen), das " +
+      "Ru-Rennen und „Achtung die Kurve“. Dazu Reaktion, Tastenfolge merken, " +
+      "Kopfrechnen, Flächeninhalt, Schätzen, Ausreißer finden und Hämmern. " +
       "Alle spielen gleichzeitig gegeneinander, und Tempo entscheidet: bei den " +
       "Quizspielen bringt eine schnelle Antwort deutlich mehr Punkte als eine " +
       "späte. Die Aufgaben passen sich dabei an: lief die letzte Runde gut, " +
