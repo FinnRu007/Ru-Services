@@ -181,9 +181,6 @@ const PROJECTS = [
       "nach Gen-4-Formeln und waschechte Dex-/Item-/Attackendaten.",
     stack: ["Godot 4", "GDScript", "ENet", "Python (Datenpipeline)"],
     link: "https://github.com/FinnRu007/Ru-Pokemon",
-    hinweis:
-      "Privates Repo (Nintendo-IP, nur für den privaten Gebrauch) – kein " +
-      "öffentlicher Download.",
   },
 
   // Neues Projekt hinzufügen? Diesen Block kopieren und ausfüllen:
