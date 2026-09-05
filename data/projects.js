@@ -172,6 +172,20 @@ const PROJECTS = [
       "(TCP) auf den Host-PC weiterleiten.",
   },
 
+  {
+    name: "Pokemon",
+    status: "In Entwicklung",
+    beschreibung:
+      "PC-Remake von Pokémon Perl (Gen 4) in Godot 4: 2.5D-Welt mit " +
+      "Echtzeit-Multiplayer auf der Overworld, rundenbasiertes Kampfsystem " +
+      "nach Gen-4-Formeln und waschechte Dex-/Item-/Attackendaten.",
+    stack: ["Godot 4", "GDScript", "ENet", "Python (Datenpipeline)"],
+    link: "https://github.com/FinnRu007/Ru-Pokemon",
+    hinweis:
+      "Privates Repo (Nintendo-IP, nur für den privaten Gebrauch) – kein " +
+      "öffentlicher Download.",
+  },
+
   // Neues Projekt hinzufügen? Diesen Block kopieren und ausfüllen:
   //
   // {
