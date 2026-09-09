@@ -46,15 +46,21 @@ const PROJECTS = [
     link: "https://github.com/FinnRu007/Ru-Klimaquiz",
   },
   {
-    name: "Rechnungen",
+    name: "Ru Services – Rechnungsersteller",
     status: "Aktiv",
     kategorie: "Desktop-Programme",
     beschreibung:
-      "Windows-Programm zur Rechnungserstellung für landwirtschaftliche " +
-      "Betriebe. Erzeugt PDF-Rechnungen und verwaltet Kunden- und " +
-      "Positionsdaten lokal.",
+      "Windows-Rechnungsprogramm für kleine Betriebe: Rechnungen, " +
+      "Lieferscheine, Angebote – inklusive E-Rechnung nach EN 16931 " +
+      "(ZUGFeRD / Factur-X). Läuft komplett lokal, ohne Cloud, ohne Abo, " +
+      "ohne Konto. Kostenlose Version und einmalig zahlbare Pro-Version.",
     stack: ["Python", "CustomTkinter", "ReportLab", "PyInstaller"],
-    link: "",
+    website: "https://finnru007.github.io/Ru-Rechnungen-Web/",
+    download: "https://github.com/FinnRu007/Ru-Rechnungen-Web/releases/latest/download/Ru-Services-Setup-4.4.8.exe",
+    hinweis:
+      "Produktseite mit allen Infos, Screenshots und Download der kostenlosen " +
+      "Version. Beim ersten Start ggf. SmartScreen-Hinweis mit „Weitere " +
+      "Informationen“ → „Trotzdem ausführen“ bestätigen.",
   },
   {
     name: "Pomodoro",
