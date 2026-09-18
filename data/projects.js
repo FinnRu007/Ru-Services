@@ -179,6 +179,25 @@ const PROJECTS = [
   },
 
   {
+    name: "Zeiten Berechnen",
+    status: "Aktiv",
+    kategorie: "Desktop-Programme",
+    beschreibung:
+      "Windows-Programm für die eigene Arbeitszeit: Stundenlohn, Wochen- " +
+      "und Tagesmaximum sowie eine eigene Pausenregel eintragen (Standard: " +
+      "ab 6 Stunden Arbeit die nächsten 45 Minuten automatisch Pause). Für " +
+      "jeden Wochentag Beginn und Ende erfassen – fehlt an einem Tag das " +
+      "Ende, schlägt die App die Feierabend-Zeit vor, sobald Wochen- oder " +
+      "Tagesmaximum erreicht ist, und rechnet den Verdienst der Woche aus.",
+    stack: ["Python", "CustomTkinter", "PyInstaller"],
+    link: "https://github.com/FinnRu007/Ru-Zeiterfassung",
+    download: "downloads/Ru-Zeiterfassung.zip",
+    hinweis:
+      "ZIP herunterladen und entpacken, dann im Ordner die Datei " +
+      "Ru-Zeiterfassung.exe starten.",
+  },
+
+  {
     name: "Pokemon",
     status: "In Entwicklung",
     beschreibung:
