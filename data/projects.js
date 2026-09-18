@@ -188,7 +188,10 @@ const PROJECTS = [
       "ab 6 Stunden Arbeit die nächsten 45 Minuten automatisch Pause). Für " +
       "jeden Wochentag Beginn und Ende erfassen – fehlt an einem Tag das " +
       "Ende, schlägt die App die Feierabend-Zeit vor, sobald Wochen- oder " +
-      "Tagesmaximum erreicht ist, und rechnet den Verdienst der Woche aus.",
+      "Tagesmaximum erreicht ist. Jede Kalenderwoche bleibt dauerhaft und " +
+      "rückwirkend bearbeitbar, Tage lassen sich als Urlaub markieren, und " +
+      "berechnet werden Wochenverdienst sowie Urlaubsentgelt nach § 11 " +
+      "BUrlG (Durchschnitt der letzten 13 Wochen).",
     stack: ["Python", "CustomTkinter", "PyInstaller"],
     link: "https://github.com/FinnRu007/Ru-Zeiterfassung",
     download: "downloads/Ru-Zeiterfassung.zip",
