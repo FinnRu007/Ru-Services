@@ -34,6 +34,12 @@ Du musst **kein HTML anfassen**, um Texte zu ändern:
 - **Hinweis / Anleitung** → optionales Feld `hinweis` pro Eintrag: erscheint
   als kleine Info-Zeile auf der Karte (z. B. eine kurze Installationsanleitung).
 
+- **Spiele** → Ordner `Games/`
+  Jedes Spiel liegt in einem eigenen Unterordner (z. B. `Games/rexi-will-fliegen/`)
+  mit `index.html` und optional `cover.jpg`. Die Auswahlseite `Games/index.html`
+  liest die Liste aus `Games/games.js`. Neues Spiel: Ordner anlegen und dort
+  einen Eintrag ergänzen. Live unter <https://finnru007.github.io/Ru-Services/Games/>.
+
 - **Über mich** → `data/about.js`
   Name, Rolle, Bio-Absätze, Ausbildung, Interessen, Kontakt.
 
