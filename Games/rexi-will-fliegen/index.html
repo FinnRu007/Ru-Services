@@ -297,6 +297,8 @@ textarea{width:100%;box-sizing:border-box;min-height:70px;font-family:ui-monospa
 /* ================= Helfer ================= */
 const TAU=Math.PI*2, G=9.81, SPACE=10000;
 const AIR={df:0.006,dexp:0.5,vs:300,vw:120};window.__rexiAIR=AIR;
+/* Spielgefühl: speed = Spieltempo, turn = Lenkstärke, ground = Bodenreibung, bounce = Abprallkraft */
+const TUNE={speed:1.6,turn:1.6,ground:2.2,bounce:0.75};
 const clamp=(v,a,b)=>v<a?a:(v>b?b:v);
 const lerp=(a,b,t)=>a+(b-a)*t;
 const $=id=>document.getElementById(id);
@@ -314,15 +316,15 @@ const AMB='<span class="amber-ico"></span>';
 
 /* ================= Spieldaten ================= */
 const CATS=[
- {id:'rampe',n:'Rampe',d:'Je höher die Rampe, desto schneller rutschst du los.',tiers:[
-  {n:'Holzrutsche',d:'Omas alte Rutsche am Farnhang. Knarzt ein bisschen.',p:0,h:18},
-  {n:'Farnhügel-Rampe',d:'Etwas höher und mit weichem Farn gepolstert.',p:60,h:27},
-  {n:'Baumstamm-Rampe',d:'Aus einem umgestürzten Mammutbaum gezimmert.',p:180,h:38},
-  {n:'Steinrampe',d:'Glatt geschliffener Fels. Ganz schön schnell.',p:450,h:52},
-  {n:'Klippenrampe',d:'Startet direkt an der Kante der großen Klippe.',p:1000,h:70},
-  {n:'Vulkanrampe',d:'Am Hang des alten Vulkans. Schön warm am Po.',p:2200,h:95},
-  {n:'Mega-Rampe',d:'Ein Gerüst weit über die Baumkronen hinaus.',p:4500,h:125},
-  {n:'Himmelsrampe',d:'Die höchste Rampe, die je ein Dino gebaut hat.',p:9000,h:165}]},
+ {id:'rampe',n:'Rampe',d:'Die Rampe entscheidet über deinen Start: Jede Stufe ist höher und gibt dir zusätzlichen Schwung.',tiers:[
+  {n:'Holzrutsche',d:'Omas alte Rutsche am Farnhang. Knarzt ein bisschen.',p:0,h:18,kick:0},
+  {n:'Farnhügel-Rampe',d:'Etwas höher und mit weichem Farn gepolstert.',p:60,h:27,kick:4},
+  {n:'Baumstamm-Rampe',d:'Aus einem umgestürzten Mammutbaum gezimmert.',p:180,h:38,kick:9},
+  {n:'Steinrampe',d:'Glatt geschliffener Fels. Ganz schön schnell.',p:450,h:52,kick:15},
+  {n:'Klippenrampe',d:'Startet direkt an der Kante der großen Klippe.',p:1000,h:70,kick:22},
+  {n:'Vulkanrampe',d:'Am Hang des alten Vulkans. Schön warm am Po.',p:2200,h:95,kick:30},
+  {n:'Mega-Rampe',d:'Ein Gerüst weit über die Baumkronen hinaus.',p:4500,h:125,kick:39},
+  {n:'Himmelsrampe',d:'Die höchste Rampe, die je ein Dino gebaut hat.',p:9000,h:165,kick:50}]},
  {id:'schlitten',n:'Schlitten',d:'Ein guter Schlitten rutscht schneller, gleitet am Boden weiter und federt Aufpralle ab.',tiers:[
   {n:'Kein Schlitten',d:'Rexi rutscht auf dem Popo. Autsch.',p:0,eff:.72,mu:.55,boost:0,bounce:.40},
   {n:'Palmblatt',d:'Ein großes, glattes Blatt. Besser als nichts!',p:50,eff:.78,mu:.45,boost:0,bounce:.42},
@@ -540,13 +542,13 @@ function wy2sy(y){return H*0.5-(y-cam.y)*cam.z;}
 
 /* ================= Ausrüstung & Werte ================= */
 function getStats(eq){eq=eq||save.equip;const r=CAT.rampe.tiers[eq.rampe],s=CAT.schlitten.tiers[eq.schlitten],g=CAT.gleiter.tiers[eq.gleiter],k=CAT.rakete.tiers[eq.rakete],t=CAT.tank.tiers[eq.tank],a=CAT.aero.tiers[eq.aero];
- return{rampH:r.h,eff:s.eff,mu:s.mu,sledBoost:s.boost,bounce:s.bounce,lift:g.lift,turn:g.turn,thrust:k.thrust,fuel:k.fuel*t.mult,drag:a.drag,
+ return{rampH:r.h,rampKick:r.kick||0,eff:s.eff,mu:s.mu,sledBoost:s.boost,bounce:s.bounce,lift:g.lift,turn:g.turn,thrust:k.thrust,fuel:k.fuel*t.mult,drag:a.drag,
   magnet:gadOn('magnet'),beutel:gadOn('beutel'),hupf:gadOn('hupf'),nach:gadOn('nach'),ballon:gadOn('ballon'),radar:gadOn('radar'),feder:gadOn('feder'),kompass:gadOn('kompass')};}
 function exitHeight(h){return 3+h*0.08;}
-function launchSpeed(st){return Math.sqrt(2*G*(st.rampH-exitHeight(st.rampH)+1.5)*st.eff)+st.sledBoost;}
+function launchSpeed(st){return Math.sqrt(2*G*(st.rampH-exitHeight(st.rampH)+1.5)*st.eff)+st.sledBoost+st.rampKick;}
 function bestLD(st){let best=0;for(let a=0.02;a<0.8;a+=0.01){const l=Math.sin(2*a)*st.lift,d=st.drag+0.0035*Math.sin(a)**2;best=Math.max(best,l/d);}return best;}
 function statLine(cid,t){const x=CAT[cid].tiers[t];switch(cid){
- case 'rampe':return 'Höhe '+x.h+' m';
+ case 'rampe':return 'Höhe '+x.h+' m'+(x.kick?' · Schwung +'+fmt(x.kick*3.6)+' km/h':'');
  case 'schlitten':return 'Rutschigkeit '+Math.round(x.eff*100)+' %'+(x.boost?' · Schub +'+x.boost:'');
  case 'gleiter':return 'Auftrieb '+Math.round(x.lift*10000)+' · Lenkung '+fmt(x.turn,1);
  case 'rakete':return x.thrust?'Schub '+x.thrust+' · '+fmt(x.fuel,1)+' s':'Kein Schub';
@@ -571,7 +573,7 @@ let menuScene=null;
 function newFlight(){const st=getStats();const path=buildRamp(st.rampH);const p0=rampPoint(path,0);
  return{st,path,phase:'ready',t:0,launchT:0,x:p0.x,y:p0.y,vx:0,vy:0,ang:p0.a,prevAng:p0.a,s:0,rv:0,rampExtra:0,fuel:st.fuel,maxFuel:st.fuel,
   dist:0,maxH:0,maxSpeed:0,time:0,amber:0,bounces:0,rings:0,thermals:0,skips:0,slide:0,iceSlide:0,rot:0,usedRocket:false,belly:false,backwards:false,
-  ground:false,stopT:0,ended:false,afterUsed:false,balloonT:0,balloonUsed:false,goalsHit:[],fossilsFound:[],space:false,spawnX:15,goalT:0,boosting:false,
+  ground:false,stopT:0,ended:false,afterUsed:false,balloonT:0,balloonUsed:false,goalsHit:[],fossilsFound:[],space:false,spawnX:15,cells:new Set(),goalT:0,boosting:false,
   flash:0,banner:null,acc:0,shake:0,lastBiome:0};}
 
 function startFlight(){hideAll();mode='flight';paused=false;flight=newFlight();items=[];parts=[];
@@ -579,12 +581,19 @@ function startFlight(){hideAll();mode='flight';paused=false;flight=newFlight();i
 function resetInput(){input.up=input.down=input.boost=false;}
 
 function amberValue(x){return 2+Math.floor(Math.max(0,x)/400);}
+/* Gegenstände im ganzen Himmel: Die Welt ist in 40-m-Zellen geteilt, jede Zelle wird beim ersten Sichtkontakt einmal gefüllt */
+const CELL_M=40;
+function spawnCells(f){const z=cam.z;const x0=Math.floor((cam.x-W*0.35/z-40)/CELL_M),x1=Math.floor((cam.x+W*0.65/z+200)/CELL_M);
+ const y0=Math.max(0,Math.floor((cam.y-H*0.5/z-80)/CELL_M)),y1=Math.min(320,Math.floor((cam.y+H*0.5/z+80)/CELL_M));
+ if((x1-x0+1)*(y1-y0+1)>4000)return;
+ for(let i=Math.max(1,x0);i<=x1;i++)for(let j=y0;j<=y1;j++){const k=i*400+j;if(f.cells.has(k))continue;f.cells.add(k);fillCell(f,i*CELL_M,j*CELL_M);}}
+function fillCell(f,x,y){const r=Math.random;const space=y>7000;const v=amberValue(x);
+ if(r()<(space?0.1:0.17)){const n=3+(r()*3|0);const x0=x+r()*(CELL_M-14),y0=Math.max(3,y+r()*CELL_M),arc=r()<0.5;for(let i=0;i<n;i++)items.push({t:'amber',x:x0+i*4.5,y:y0+(arc?Math.sin(i/(n-1||1)*Math.PI)*5:0),v});}
+ if(r()<0.012)items.push({t:'big',x:x+r()*CELL_M,y:Math.max(5,y+r()*CELL_M),v:12+Math.floor(Math.max(0,x)/150)});
+ if(r()<0.022)items.push({t:'ring',x:x+r()*CELL_M,y:Math.max(9,y+r()*CELL_M)});
+ if(f.st.thrust>0&&r()<0.0035)items.push({t:'fuel',x:x+r()*CELL_M,y:Math.max(4,y+r()*CELL_M)});}
 function spawnChunk(f,x){const r=Math.random;const baseY=Math.max(4,f.y+f.vy*1.2);const spread=clamp(18+f.y*0.25,18,500);
  const space=f.y>7000;
- if(r()<(space?0.25:0.55)){const n=3+(r()*4|0);const y0=Math.max(3,baseY+(r()-0.5)*spread*2);const v=amberValue(x);for(let i=0;i<n;i++)items.push({t:'amber',x:x+i*4.5,y:y0+Math.sin(i/(n-1||1)*Math.PI)*5,v});}
- if(r()<0.05)items.push({t:'big',x:x+r()*20,y:Math.max(5,baseY+(r()-0.5)*spread*2.4),v:12+Math.floor(Math.max(0,x)/150)});
- if(r()<(space?0.04:0.07))items.push({t:'ring',x:x+r()*20,y:Math.max(8,baseY+(r()-0.3)*spread*1.6)});
- if(f.st.thrust>0&&r()<0.045)items.push({t:'fuel',x:x+r()*20,y:Math.max(4,baseY+(r()-0.5)*spread*2)});
  if(!space&&r()<0.028&&f.y<4000){const top=Math.max(80,baseY+120+r()*200);items.push({t:'thermal',x:x+r()*20,y0:0,y1:top,w:26,hit:false,ph:r()*10});}}
 
 function emit(x,y,vx,vy,life,col,size,type){parts.push({x,y,vx,vy,life,max:life,col,size,type:type||0});if(parts.length>700)parts.splice(0,parts.length-700);}
@@ -599,7 +608,7 @@ function updateFlight(f,dt){
   if(input.boost&&f.fuel>0&&st.thrust>0){f.rampExtra+=st.thrust*dt*0.6;f.fuel=Math.max(0,f.fuel-dt);f.usedRocket=true;f.boosting=true;}
   const p=rampPoint(f.path,f.s);
   const base=Math.sqrt(Math.max(9,2*G*(f.path.Hr-p.y+1.5)*st.eff));
-  f.rv=base+st.sledBoost*clamp((f.s/f.path.len-0.4)/0.6,0,1)+f.rampExtra;
+  f.rv=base+(st.sledBoost+st.rampKick)*clamp((f.s/f.path.len-0.4)/0.6,0,1)+f.rampExtra;
   f.s+=f.rv*dt;f.maxSpeed=Math.max(f.maxSpeed,f.rv);
   if(f.s>=f.path.len){const a=f.path.exitA;f.x=0;f.y=f.path.exitH;f.vx=f.rv*Math.cos(a);f.vy=f.rv*Math.sin(a);f.ang=a;f.prevAng=a;f.phase='air';f.launchT=f.t;sfx('whoosh');
    if(st.sledBoost>0)burst(0,f.y,14,['#ffd36a','#ff8a3a'],10,0.5,5);}
@@ -609,7 +618,7 @@ function updateFlight(f,dt){
  f.time=f.t-f.launchT;
  const turn=(input.up?1:0)-(input.down?1:0);
  let v=Math.hypot(f.vx,f.vy)||1e-4;const va=Math.atan2(f.vy,f.vx);
- if(turn!==0)f.ang+=turn*st.turn*dt;
+ if(turn!==0)f.ang+=turn*st.turn*TUNE.turn*dt;
  else if(f.ground)f.ang+=wrapA(0-f.ang)*6*dt;
  else if(v>6)f.ang+=wrapA(va-f.ang)*0.7*dt;
  const dA=wrapA(f.ang-f.prevAng);if(!f.ground)f.rot+=dA;f.prevAng=f.ang;f.ang=wrapA(f.ang);
@@ -634,12 +643,12 @@ function updateFlight(f,dt){
     if(ia<0.25&&hv>18){f.vy=vIn*0.55;f.vx*=0.86;f.y=0;f.skips++;splash(f.x,6);sfx('splash');}
     else{f.y=0;f.vy=0;f.vx*=0.3;f.ground=true;splash(f.x,18);sfx('splash');}
    }else{const maxA=st.hupf?0.95:0.62;
-    if(vIn>4&&ia<maxA){f.vy=vIn*st.bounce*(st.hupf?1.25:1);f.vx*=(st.hupf?0.93:0.85);f.y=0;f.bounces++;dust(f.x,bio,8);sfx('bounce');}
+    if(vIn>6&&ia<maxA){f.vy=vIn*st.bounce*TUNE.bounce*(st.hupf?1.25:1);f.vx*=(st.hupf?0.9:0.8);f.y=0;f.bounces++;dust(f.x,bio,8);sfx('bounce');}
     else{f.y=0;f.vy=0;f.vx*=Math.max(0.25,1-ia*0.7);f.ground=true;dust(f.x,bio,16);sfx('thud');}
    }
   }else{f.y=0;if(f.vy<0)f.vy=0;}
  }else if(f.ground&&f.y>0.3){f.ground=false;}
- if(f.ground){const mu=st.mu*bio.mu,dec=mu*G*dt;if(Math.abs(f.vx)<=dec)f.vx=0;else f.vx-=Math.sign(f.vx)*dec;
+ if(f.ground){const mu=st.mu*bio.mu*TUNE.ground+0.15,dec=mu*G*dt;if(Math.abs(f.vx)<=dec)f.vx=0;else f.vx-=Math.sign(f.vx)*dec;
   const dd=Math.abs(f.vx)*dt;f.slide+=dd;if(bio.surf==='ice')f.iceSlide+=dd;
   if(Math.abs(f.vx)>4&&Math.random()<0.3){if(bio.surf==='water')splash(f.x,1);else dust(f.x,bio,1);}}
  v=Math.hypot(f.vx,f.vy);
@@ -647,21 +656,21 @@ function updateFlight(f,dt){
  collect(f);
  if(!f.space&&f.y>=SPACE&&!save.finished){f.space=true;f.flash=1;f.banner={text:'Der Meteor zerplatzt!',sub:'Tausend Sternschnuppen über dem Dino-Tal',t:4};sfx('boom');
   for(let i=0;i<120;i++){const a=Math.random()*TAU,s=40+Math.random()*160;emit(f.x+60,f.y+60,Math.cos(a)*s,Math.sin(a)*s,2+Math.random()*2,['#ffd36a','#ff8a3a','#fff3c4','#9fd8ff'][i%4],3+Math.random()*5,1);}}
- if(f.ground&&Math.abs(f.vx)<0.6&&!f.boosting&&f.balloonT<=0){f.stopT+=dt;}else f.stopT=0;
+ if(f.ground&&Math.abs(f.vx)<2.5&&!f.boosting&&f.balloonT<=0){f.stopT+=dt;f.vx*=Math.max(0,1-4*dt);}else f.stopT=0;
  if(f.ground&&bio.surf==='water'&&Math.abs(f.vx)<3)f.stopT+=dt;
- if(f.stopT>0.9||f.time>900)endFlight(f);
+ if(f.stopT>0.6||f.time>900)endFlight(f);
 }
 function dust(x,bio,n){for(let i=0;i<n;i++)emit(x+(Math.random()-0.5)*2,0.3,(Math.random()-0.3)*8,Math.random()*6,0.7+Math.random()*0.5,bio.top,3+Math.random()*4);}
 function splash(x,n){for(let i=0;i<n;i++)emit(x+(Math.random()-0.5)*3,0.2,(Math.random()-0.4)*10,4+Math.random()*12,0.8+Math.random()*0.6,i%2?'#ffffff':'#9fd8ff',3+Math.random()*4);}
 
-function collect(f){const mag=f.st.magnet?25:0;const R=5.5;
+function collect(f){const mag=f.st.magnet?30:0;const R=9;
  for(let i=items.length-1;i>=0;i--){const it=items[i];if(it.t==='thermal')continue;
   const dx=f.x-it.x,dy=f.y+0.8-it.y,d=Math.hypot(dx,dy);
   if(mag&&d<mag&&d>0.1&&it.t!=='ring'){const pull=Math.min(d,(40+Math.hypot(f.vx,f.vy))*0.016);it.x+=dx/d*pull;it.y+=dy/d*pull;}
   const rad=it.t==='ring'?8:R;
   if(d<rad){
    if(it.t==='amber'||it.t==='big'){const val=it.v*(f.st.beutel?1.5:1);f.amber+=val;sfx(it.t==='big'?'big':'coin');burst(it.x,it.y,it.t==='big'?14:5,['#ffd36a','#f0a030'],8,0.4,3);items.splice(i,1);}
-   else if(it.t==='fuel'){if(f.maxFuel>0)f.fuel=Math.min(f.maxFuel,f.fuel+f.maxFuel*0.35);sfx('fuel');burst(it.x,it.y,8,['#e0552d','#ffd36a'],8,0.4,3);items.splice(i,1);}
+   else if(it.t==='fuel'){if(f.maxFuel>0)f.fuel=Math.min(f.maxFuel,f.fuel+f.maxFuel*0.2);sfx('fuel');burst(it.x,it.y,8,['#e0552d','#ffd36a'],8,0.4,3);items.splice(i,1);}
    else if(it.t==='ring'){const v=Math.hypot(f.vx,f.vy)||1;const nv=v+12;f.vx*=nv/v;f.vy*=nv/v;f.rings++;sfx('ring');burst(it.x,it.y,16,['#7ff0ff','#ffffff'],14,0.5,3);items.splice(i,1);}
   }}
  for(const fo of FOSSILS){if(save.fossils[fo.id]||f.fossilsFound.indexOf(fo.id)>=0)continue;const d=Math.hypot(f.x-fo.x,f.y-fo.y);
@@ -688,8 +697,9 @@ function frameFlight(f,dt){
  if(sx>W*0.8)cam.x+=(sx-W*0.8)/cam.z;if(sx<W*0.1)cam.x-=(W*0.1-sx)/cam.z;
  if(sy<H*0.15)cam.y+=(H*0.15-sy)/cam.z;if(sy>H*0.88&&cam.y>minY)cam.y=Math.max(minY,cam.y-(sy-H*0.88)/cam.z);
  // Objekte erzeugen
+ if(f.phase==='air'||f.phase==='ramp')spawnCells(f);
  if(f.phase==='air'){const ahead=f.x+W*0.75/cam.z+80;let guard=0;while(f.spawnX<ahead&&guard++<60){spawnChunk(f,f.spawnX);f.spawnX+=32;}
-  const minX=f.x-W*0.5/cam.z-150;for(let i=items.length-1;i>=0;i--){const it=items[i];if(it.x<minX||(it.t!=='thermal'&&Math.abs(it.y-f.y)>4000))items.splice(i,1);}
+  const minX=cam.x-W*0.35/cam.z-200,maxDY=H*0.5/cam.z+600;for(let i=items.length-1;i>=0;i--){const it=items[i];if(it.x<minX||(it.t!=='thermal'&&Math.abs(it.y-cam.y)>maxDY))items.splice(i,1);}
   f.goalT-=dt;if(f.goalT<=0){f.goalT=0.25;checkGoals(f,false);}
   const bi=biomeIndex(f.x);if(bi>f.lastBiome){f.lastBiome=bi;if(bi>0&&!save.biomes[BIOMES[bi].id]){f.banner={text:BIOMES[bi].n,sub:'Neues Gebiet entdeckt!',t:3};}}
  }
@@ -1006,7 +1016,7 @@ function render(dt){const c=ctx;c.setTransform(DPR,0,0,DPR,0,0);
  c.restore();
  if(mode==='flight'&&flight)drawHUD(c,flight,T);}
 function frame(now){let dt=Math.min(0.05,(now-last)/1000);last=now;T+=dt;
- if(mode==='flight'&&flight&&!paused){flight.acc+=dt;const step=1/120;let n=0;while(flight.acc>=step&&n<12&&!flight.ended){updateFlight(flight,step);flight.acc-=step;n++;}if(n>=12)flight.acc=0;frameFlight(flight,dt);updateParts(dt);}
+ if(mode==='flight'&&flight&&!paused){flight.acc+=dt*TUNE.speed;const step=1/120;let n=0;while(flight.acc>=step&&n<12&&!flight.ended){updateFlight(flight,step);flight.acc-=step;n++;}if(n>=12)flight.acc=0;frameFlight(flight,dt);updateParts(dt*TUNE.speed);}
  else if(mode==='menu'){if(!menuScene||menuScene.key!==save.equip.rampe)makeMenuScene();const m=menuScene;const tz=rampZoom(m.path);cam.z=lerp(cam.z,tz,1-Math.exp(-dt*3));cam.x=lerp(cam.x,-m.path.L*0.5-0.15*W/tz,1-Math.exp(-dt*3));cam.y=lerp(cam.y,Math.max(m.path.Hr*0.5,(H*0.5-95)/cam.z),1-Math.exp(-dt*3));updateParts(dt);}
  render(dt);requestAnimationFrame(frame);}
 function rampZoom(p){return clamp(Math.min(H*0.5/(p.Hr+14),W*0.6/(p.L+50)),1.2,9);}
