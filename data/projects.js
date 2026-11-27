@@ -30,8 +30,8 @@ const PROJECTS = [
       "Als Erstes dabei: „Rexi will fliegen“, ein Flug- und Upgrade-Spiel mit " +
       "einem kleinen T-Rex, acht Gebieten, über 100 Zielen und 24 Fossilien.",
     stack: ["HTML", "CSS", "JavaScript", "Canvas", "Web Audio"],
-    website: "https://finnru007.github.io/Ru-Services/Games/",
-    link: "https://github.com/FinnRu007/Ru-Services/tree/main/Games",
+    website: "https://ru-services.de/games/",
+    link: "https://github.com/FinnRu007/Ru-Rechnungen-Web/tree/main/games",
   },
   {
     name: "Sudoku",

@@ -3,140 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Spiele von Finn Rummel</title>
-<meta name="description" content="Browser-Spiele von Finn Rummel. Direkt im Browser spielbar, ohne Installation.">
-<link rel="stylesheet" href="../styles.css">
-<style>
-  .game-grid{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
-    gap: 24px;
-  }
-  .game-card{
-    background: var(--bg);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    box-shadow: var(--shadow-sm);
-    transition: box-shadow .2s ease, transform .2s ease;
-    min-width: 0;
-  }
-  .game-card:hover{ box-shadow: var(--shadow-md); transform: translateY(-2px); }
-  .game-cover{
-    display: block;
-    aspect-ratio: 4 / 3;
-    max-width: 100%;
-    background: var(--bg-soft-2);
-    overflow: hidden;
-  }
-  .game-cover img{ width: 100%; height: 100%; object-fit: cover; display: block; }
-  .game-cover.empty{ display: grid; place-items: center; color: var(--ink-faint); font-family: var(--font-display); font-weight: 700; }
-  .game-body{ padding: 22px 24px 24px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
-  .game-head{ display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .game-name{ font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; margin: 0; letter-spacing: -0.01em; }
-  .game-body p{ margin: 0; color: var(--ink-soft); }
-  .game-meta{ font-size: .88rem; color: var(--ink-faint); }
-  .game-actions{ display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; padding-top: 6px; }
-  .status-Neu{ color: var(--primary); background: var(--primary-tint); }
-  .share{ display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 18px; color: var(--ink-soft); font-size: .92rem; }
-  .share code{ background: var(--bg-soft-2); border-radius: 8px; padding: 4px 10px; font-size: .88rem; overflow-wrap: anywhere; user-select: all; }
-  .share button{ font: inherit; font-weight: 600; border: 1px solid var(--line); background: var(--bg); border-radius: 999px; padding: 6px 14px; cursor: pointer; color: var(--ink); }
-  .share button:hover{ background: var(--bg-soft); }
-</style>
+<title>Spiele sind umgezogen</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://ru-services.de/games/">
+<meta http-equiv="refresh" content="0; url=https://ru-services.de/games/">
+<style>body{font-family:system-ui,sans-serif;margin:0;min-height:100vh;display:grid;place-items:center;background:#f6f7fa;color:#12141c;padding:20px}a{color:#2a4ce0}</style>
 </head>
 <body>
-
-<header class="topbar">
-  <div class="topbar-inner">
-    <a href="../index.html" class="wordmark"><span class="dot"></span>Finn Rummel</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Menü öffnen" aria-expanded="false">☰</button>
-    <nav class="nav" id="mainNav">
-      <a href="../index.html">Start</a>
-      <a href="../index.html#projekte">Projekte</a>
-      <a href="./" class="active">Spiele</a>
-      <a href="../about.html">Über mich</a>
-      <a href="../about.html#kontakt" class="nav-cta">Kontakt</a>
-    </nav>
-  </div>
-</header>
-
-<main>
-  <section class="hero">
-    <div class="hero-glow"></div>
-    <div class="wrap">
-      <div class="hero-inner">
-        <span class="badge"><span class="dot"></span>Direkt im Browser spielbar</span>
-        <h1 class="hero-title">Spiele von <span class="accent">Finn Rummel</span></h1>
-        <p class="hero-sub">
-          Kleine Browser-Spiele, ohne Installation und ohne Konto.
-          Einfach auswählen und loslegen. Der Spielstand bleibt im Browser gespeichert.
-        </p>
-        <div class="share">
-          <span>Link zum Teilen:</span>
-          <code id="shareUrl">https://finnru007.github.io/Ru-Services/Games/</code>
-          <button type="button" id="copyBtn">Kopieren</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="spiele" class="on-soft">
-    <div class="wrap">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Auswahl</p>
-          <h2 class="section-title">Spiele</h2>
-        </div>
-      </div>
-      <div class="game-grid" id="gameGrid"></div>
-    </div>
-  </section>
-</main>
-
-<footer class="wrap">
-  <span>© 2026 Finn Rummel</span>
-  <span>Spiele</span>
-</footer>
-
-<script src="games.js"></script>
-<script src="../script.js"></script>
-<script>
-(function () {
-  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const grid = document.getElementById("gameGrid");
-  const games = typeof GAMES !== "undefined" ? GAMES : [];
-  grid.innerHTML = games.map((g) => {
-    const url = encodeURIComponent(g.ordner) + "/";
-    const cover = g.cover
-      ? `<a class="game-cover" href="${url}" tabindex="-1" aria-hidden="true"><img src="${url}${esc(g.cover)}" alt="" loading="lazy"></a>`
-      : `<a class="game-cover empty" href="${url}" tabindex="-1" aria-hidden="true">${esc(g.name)}</a>`;
-    const statusClass = "status-" + String(g.status || "").replace(/\s+/g, "-");
-    return `<article class="game-card">
-      ${cover}
-      <div class="game-body">
-        <div class="game-head">
-          <h3 class="game-name">${esc(g.name)}</h3>
-          ${g.status ? `<span class="status-pill ${statusClass}">${esc(g.status)}</span>` : ""}
-          ${g.genre ? `<span class="cat-pill">${esc(g.genre)}</span>` : ""}
-        </div>
-        <p>${esc(g.beschreibung || "")}</p>
-        ${g.steuerung ? `<div class="game-meta">${esc(g.steuerung)}</div>` : ""}
-        <div class="game-actions"><a class="btn btn-primary" href="${url}">Jetzt spielen →</a></div>
-      </div>
-    </article>`;
-  }).join("");
-
-  const shareEl = document.getElementById("shareUrl");
-  if (/github\.io$/.test(location.hostname)) shareEl.textContent = location.origin + location.pathname.replace(/index\.html$/, "");
-  document.getElementById("copyBtn").addEventListener("click", (e) => {
-    const btn = e.currentTarget, text = shareEl.textContent;
-    const done = () => { btn.textContent = "Kopiert"; setTimeout(() => (btn.textContent = "Kopieren"), 1800); };
-    const fallback = () => { const r = document.createRange(); r.selectNodeContents(shareEl); const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = "Markiert: Strg+C"; };
-    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (err) { fallback(); }
-  });
-})();
-</script>
+<p>Die Spiele sind umgezogen: <a href="https://ru-services.de/games/">https://ru-services.de/games/</a></p>
+<script>location.replace("https://ru-services.de/games/");</script>
 </body>
 </html>
